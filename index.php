@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="GHS_mod">
 <head>
     <base href="/jsonapi/">
     <title>AngularJS Demo Theme</title>
@@ -20,4 +20,4 @@
 </footer>
 
 </body>
-</html>
+</html>s

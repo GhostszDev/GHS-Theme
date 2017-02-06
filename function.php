@@ -12,6 +12,9 @@ function ghs_scrs(){
     wp_enqueue_script('style', get_stylesheet_directory_uri() . 'style.css');
 
     //scripts
+    wp_register_script('AJS', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js');
+    wp_register_script('AJSRoute', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js');
+    wp_enqueue_script('GHSJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array('AJS', 'AJSRoute'));
 
 }
 
