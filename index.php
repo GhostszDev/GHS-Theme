@@ -13,7 +13,11 @@
     </h1>
 </header>
 
-<div ng-view></div>
+<div ng-view>
+
+    {{5+5}}
+
+</div>
 
 <footer>
     &copy; <?php echo date( 'Y' ); ?>
