@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="GHS_mod">
+<html ng-app>
 <head>
     <base href="/jsonapi/">
     <title>AngularJS Demo Theme</title>
@@ -13,16 +13,15 @@
     </h1>
 </header>
 
-<div ng-view>
+<div>
+    <input type="text" ng-model="name">
 
-    {{5+5}}
-
+    <p>Hello, {{name}}!</p>
 </div>
 
 <footer>
     &copy; <?php echo date( 'Y' ); ?>
 </footer>
 
-<?php wp_footer(); ?>
 </body>
 </html>
