@@ -1,0 +1,179 @@
+<div id="progressBar">
+	<div class="loader"></div>
+</div> 
+<div class="panel-content">
+	<div class="welcome-patti">
+		<span><strong>Hey, Welcome back,</strong> it’s so great to see you again</span>
+		<ul class="breadcrumbs">
+			<li><a href="#" title=""><i class="fa fa-home"></i></a></li>
+			<li><a href="#" title="">Blank</a></li>
+		</ul>
+	</div><!-- Welcome Patti -->
+	<div class="heading-sec">
+		<div class="row">
+			<div class="col-md-4 column">
+				<div class="heading-profile">
+					<h2>Blank</h2>
+					<span>Your Sample text</span>
+				</div>
+			</div>
+			<div class="col-md-8 column">
+				<div class="top-bar-chart">
+					<div class="quick-report">
+						<div class="quick-report-infos">
+							<p>My Balance</p>
+							<h3>$54,785</h3>
+						</div>
+						<span class="bar2">3,6,3,8,9,7,10,6,5,4,7,6,5,3</span>
+					</div>
+					<div class="quick-report">
+						<div class="quick-report-infos">
+							<p>New orders</p>
+							<h3>67,235</h3>
+						</div>
+						<span class="bar">5,4,3,4,6,6,9,4,2,3,7,4</span>
+					</div>
+				</div><!-- Top Bar Chart -->
+			</div>
+		</div>
+	</div><!-- Heading Sec -->
+	<div class="main-content-area">
+		<div class="go-full">
+			<div class="account-sec">
+				<div class="logo">
+				   <a href="#/" title="">
+				        <i class="fa fa-skyatlas"></i>
+				        <span>Dubli</span>
+				        <p>Admin Template</p>
+				   </a>
+				</div>
+				<form class="account-form" action="#/dashboard" method="post">
+					<ul class="account-option">
+						<li><a href="#" title="" class="facebook"><i class="ti-facebook"></i> Sign up via <strong>facebook</strong></a></li>
+						<li><a href="#" title="" class="twitter"><i class="ti-twitter"></i> Sign up via <strong>twitter</strong></a></li>
+					</ul>
+					<fieldset>
+						<i class="ti-user"></i>
+						<input type="text" placeholder="Username" />
+					</fieldset>
+					<fieldset>
+						<i class="ti-key"></i>
+						<input type="password" placeholder="Password" />
+					</fieldset>
+					<fieldset>
+						<i class="ti-email"></i>
+						<input type="text" placeholder="Email" />
+					</fieldset>
+					<div class="your-age">
+						<div class="custom-dropdown">
+							<select id="month">
+								<option>January</option>
+								<option>February</option>
+								<option>March</option>
+								<option>April</option>
+								<option>May</option>
+								<option>June</option>
+								<option>July</option>
+								<option>August</option>
+								<option>September</option>
+								<option>October</option>
+								<option>November</option>
+								<option>December</option>
+							</select>
+						</div>
+						<div class="custom-dropdown">
+							<select id="date">
+								<option>01</option>
+								<option>02</option>
+								<option>03</option>
+								<option>05</option>
+								<option>06</option>
+								<option>07</option>
+								<option>08</option>
+								<option>09</option>
+								<option>10</option>
+								<option>11</option>
+								<option>12</option>
+								<option>13</option>
+								<option>14</option>
+								<option>15</option>
+								<option>16</option>
+								<option>17</option>
+								<option>18</option>
+								<option>19</option>
+								<option>20</option>
+								<option>21</option>
+								<option>22</option>
+								<option>23</option>
+								<option>24</option>
+								<option>25</option>
+								<option>26</option>
+								<option>27</option>
+								<option>28</option>
+								<option>29</option>
+								<option>30</option>
+								<option>31</option>
+							</select>
+						</div>
+						<div class="custom-dropdown">
+							<select id="year">
+								<option>1989</option>
+								<option>1990</option>
+								<option>1991</option>
+								<option>1992</option>
+								<option>1993</option>
+								<option>1994</option>
+								<option>1995</option>
+								<option>1996</option>
+								<option>1997</option>
+								<option>1998</option>
+								<option>1999</option>
+								<option>2000</option>
+								<option>2001</option>
+								<option>2002</option>
+								<option>2003</option>
+								<option>2004</option>
+								<option>2005</option>
+								<option>2006</option>
+								<option>2007</option>
+								<option>2008</option>
+								<option>2009</option>
+							</select>
+						</div>
+					</div><!-- your age -->
+					<p>
+						<input type="radio" name="5" id="6" class="styled" /> <label for="6">Male</label>
+						<input type="radio" name="5" id="5" class="styled" /> <label for="5">Female</label>
+					</p>
+					<label>ALREADY ACCOUNT?  <a href="#/pages/login" title="">SING IN HERE</a></label>
+					<input type="submit" value="Sign up" class="red" />
+				</form>
+			</div><!-- Login Sec -->
+		</div>
+	</div>
+</div><!-- Panel Content -->
+<script type="text/javascript">
+    $(document).ready(function(){
+    
+    'use strict';
+    	
+    	//*** Piety Mini Charts ***//
+    	$(function() {
+    		
+  			$('.bar').peity('bar', {
+			  fill: ['#07bf29'],
+			  height: ['40px'],
+			  width: ['94px']
+			})
+
+			$('.bar2').peity('bar', {
+			  fill: ['#404040'],
+			  height: ['40px'],
+			  width: ['94px']
+			})
+
+  		});
+		
+	});
+
+</script>
