@@ -37,12 +37,12 @@ angular.module('GHS_mod', ['ngRoute'])
             };
 
             $http.post('http://ghostszmusic.dev/wp-json/ghs_api/v1/login', param)
-                .then(function (data) {
+                .then(function(response) {
 
-                    if (data.success) {
+                    if (response.data.success) {
                         console.log('Success!');
                     } else {
-                        console.log(data.error_message);
+                        console.log(response.data.error_message);
                     }
 
                 })
