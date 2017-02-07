@@ -10,10 +10,9 @@ angular.module('GHS_mod', ['ngRoute'])
     })
     .controller('GHS_ctrl', function($scope, $http) {
 
-        console.log('Main file loaded.');
-
         //params
         $scope.openMenu = false;
+        $scope.user_stats = [];
         $scope.user = [];
 
         //opening and closing the menu
@@ -40,7 +39,7 @@ angular.module('GHS_mod', ['ngRoute'])
                 .then(function(response) {
 
                     if (response.data.success) {
-                        console.log('Success!');
+                        $scope.user_stats = '';
                     } else {
                         console.log(response.data.error_message);
                     }
@@ -64,12 +63,12 @@ angular.module('GHS_mod', ['ngRoute'])
             };
 
             $http.post('http://ghostszmusic.dev/wp-json/ghs_api/v1/signup', param)
-                .then(function (data) {
+                .then(function(response) {
 
-                    if (data.success) {
+                    if (response.data.success) {
                         console.log('Success!');
                     } else {
-                        console.log(data.error_message);
+                        console.log(response.data.error_message);
                     }
 
                 })
