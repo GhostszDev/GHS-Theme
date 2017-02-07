@@ -17,7 +17,7 @@
 </div>
 
 <footer>
-    &copy; <?php echo date( 'Y' ); ?>
+    GhostszMusic &copy; <?php echo date( 'Y' ); ?>
 </footer>
 
 </body>
