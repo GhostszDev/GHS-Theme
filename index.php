@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="GHS_mod">
 <head>
-    <base href="/jsonapi/">
     <title>AngularJS Demo Theme</title>
     <?php wp_head(); ?>
 </head>
@@ -13,10 +12,8 @@
     </h1>
 </header>
 
-<div>
-    <input type="text" ng-model="name">
+<div ng-view>
 
-    <p>Hello, {{name}}!</p>
 </div>
 
 <footer>
