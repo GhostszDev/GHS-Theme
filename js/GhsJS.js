@@ -1,5 +1,16 @@
 angular.module('GHS_mod', ['ngRoute'])
+    .config(function($routeProvider, $locationProvider) {
+        $locationProvider.html5Mode(true);
+
+        $routeProvider
+            .when('/', {
+                templateUrl: myLocalized.partials + 'nav.html',
+                controller: 'GHS_ctrl'
+            });
+    })
     .controller('GHS_ctrl', function($scope, $http) {
+
+        console.log('Main file loaded.');
 
         //params
         $scope.openMenu = false;
