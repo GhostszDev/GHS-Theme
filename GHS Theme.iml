@@ -15,6 +15,5 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="angular.min" level="project" />
   </component>
 </module>

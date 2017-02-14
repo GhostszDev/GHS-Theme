@@ -4,7 +4,7 @@ angular.module('GHS_mod', ['ngRoute'])
 
         $routeProvider
             .when('/', {
-                templateUrl: myLocalized.partials + 'nav.html',
+                templateUrl: myLocalized.partials + 'main.html',
                 controller: 'GHS_ctrl'
             });
     })
@@ -35,7 +35,7 @@ angular.module('GHS_mod', ['ngRoute'])
                 remember: user.remember
             };
 
-            $http.post('http://ghostszmusic.dev/wp-json/ghs_api/v1/login', param)
+            $http.post('https://ghostszmusic.com/wp-json/ghs_api/v1/login', param)
                 .then(function(response) {
 
                     if (response.data.success) {
