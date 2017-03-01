@@ -302,7 +302,7 @@ header.side-header {
 
 .logo {
     float: left;
-    padding: 22px 40px;
+    padding: 22px 15px;
     width: 100%;
 }
 .logo > a {
@@ -323,13 +323,13 @@ header.side-header {
     font-size: 29px;
     left: 0;
     position: absolute;
-    top: 14px;
+    top: 4px;
     
-    -webkit-transform: rotate(-95deg);
-    -moz-transform: rotate(-95deg);
-    -ms-transform: rotate(-95deg);
-    -o-transform: rotate(-95deg);
-    transform: rotate(-95deg);
+    /*-webkit-transform: rotate(-95deg);*/
+    /*-moz-transform: rotate(-95deg);*/
+    /*-ms-transform: rotate(-95deg);*/
+    /*-o-transform: rotate(-95deg);*/
+    /*transform: rotate(-95deg);*/
 
     color: #ff3f3f;
 }
@@ -341,7 +341,7 @@ header.side-header {
     width: 100%;
 }
 .admin-action-bar {
-    background: #2c2c2c url("../images/flower.png") no-repeat scroll 200px top / auto 100%;
+    background: #2c2c2c no-repeat scroll 200px top / auto 100%;
     float: left;
     padding: 30px;
     width: 100%;
@@ -415,7 +415,7 @@ header.side-header {
 }
 nav.side-menus {
     float: left;
-    padding: 30px 0 70px;
+    padding: 5px 0 10px;
     width: 100%;
 }
 .parent-menu {
@@ -914,8 +914,8 @@ min-height: inherit;
 }
 .admin-name-hello {
     float: right;
-    margin-left: 30px;
-    width: 170px;
+    margin-left: 5px;
+    width: 100px !important;
 }
 .admin-name-hello > span {
 
@@ -18877,7 +18877,6 @@ li.sortable-placeholder {
 }
 .fancy-social {
     float: left;
-    margin-top: 40px;
     width: 100%;
 }
 .fancy-social > span {

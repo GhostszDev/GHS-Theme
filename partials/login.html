@@ -1,0 +1,113 @@
+<!--<div ng-show="!loggedIn" style="color: #000;">-->
+    <!--<input ng-model="user.name" type="text">-->
+    <!--<input ng-model="user.password" type="password">-->
+    <!--<input ng-model="user.remember" type="checkbox">-->
+    <!--<button ng-click="login(user)">Submit</button>-->
+<!--</div>-->
+
+<!--<div ng-hide="!loggedIn">-->
+
+    <!--<p>You're signed in!</p>-->
+
+<!--</div>-->
+
+<div id="progressBar">
+    <div class="loader"></div>
+</div>
+<div class="panel-content">
+    <div class="welcome-patti">
+        <span><strong>Hey, Welcome back,</strong> it’s so great to see you again</span>
+        <ul class="breadcrumbs">
+            <li><a href="#" title=""><i class="fa fa-home"></i></a></li>
+            <li><a href="#" title="">Blank</a></li>
+        </ul>
+    </div><!-- Welcome Patti -->
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-4 column">
+                <div class="heading-profile">
+                    <h2>Blank</h2>
+                    <span>Your Sample text</span>
+                </div>
+            </div>
+            <div class="col-md-8 column">
+                <div class="top-bar-chart">
+                    <div class="quick-report">
+                        <div class="quick-report-infos">
+                            <p>My Balance</p>
+                            <h3>$54,785</h3>
+                        </div>
+                        <span class="bar2">3,6,3,8,9,7,10,6,5,4,7,6,5,3</span>
+                    </div>
+                    <div class="quick-report">
+                        <div class="quick-report-infos">
+                            <p>New orders</p>
+                            <h3>67,235</h3>
+                        </div>
+                        <span class="bar">5,4,3,4,6,6,9,4,2,3,7,4</span>
+                    </div>
+                </div><!-- Top Bar Chart -->
+            </div>
+        </div>
+    </div><!-- Heading Sec -->
+    <div class="main-content-area">
+        <div class="go-full">
+            <div class="account-sec">
+                <div class="logo" style="padding-left: 121px;">
+                    <a href="/" title="">
+                        <i>
+                            <img src="https://ghostszmusic.com/wp-content/uploads/2016/02/cropped-logo-e1484926667618.png" style="width: 35px;">
+                        </i>
+                        <span>GhostszMusic</span>
+                        <p>Games, Music & More</p>
+                    </a>
+                </div>
+                <form class="account-form" action="#/dashboard" method="post">
+                    <ul class="account-option">
+                        <li><a href="#" title="" class="facebook"><i class="ti-facebook"></i> Sign in via <strong>facebook</strong></a></li>
+                        <li><a href="#" title="" class="twitter"><i class="ti-twitter"></i> Sign in via <strong>twitter</strong></a></li>
+                    </ul>
+                    <fieldset>
+                        <i class="ti-user"></i>
+                        <input type="text" placeholder="Username" ng-model="user.name"/>
+                    </fieldset>
+                    <fieldset>
+                        <i class="ti-key"></i>
+                        <input type="password" placeholder="Password" ng-model="user.password"/>
+                    </fieldset>
+                    <label><input type="checkbox" ng-model="user.remember"/>Remember me</label>
+                    <input type="submit" ng-click="login(user)" value="submit" class="red" />
+                </form>
+                <ul class="account-feature">
+                    <li><a href="#" title="">Forgert your password?</a></li>
+                    <li><a href="/sign-up" title="">Create a new account</a></li>
+                </ul>
+            </div><!-- Login Sec -->
+        </div>
+    </div>
+</div><!-- Panel Content -->
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        'use strict';
+
+        //*** Piety Mini Charts ***//
+        $(function() {
+
+            $('.bar').peity('bar', {
+                fill: ['#07bf29'],
+                height: ['40px'],
+                width: ['94px']
+            })
+
+            $('.bar2').peity('bar', {
+                fill: ['#404040'],
+                height: ['40px'],
+                width: ['94px']
+            })
+
+        });
+
+    });
+
+</script>

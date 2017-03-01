@@ -1,0 +1,96 @@
+<div id="progressBar">
+    <div class="loader"></div>
+</div>
+<div class="panel-content">
+    <div class="welcome-patti">
+        <!--<span><strong>Hey, Welcome back,</strong> it’s so great to see you again</span>-->
+        <ul class="breadcrumbs">
+            <!--<li><a href="#" title=""><i class="fa fa-home"></i></a></li>-->
+            <!--<li><a href="#" title="">Blank</a></li>-->
+        </ul>
+    </div><!-- Welcome Patti -->
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-4 column">
+                <div class="heading-profile">
+                    <!--<h2>Blog</h2>-->
+                    <!--<span>Your Sample text</span>-->
+                </div>
+            </div>
+            <div class="col-md-8 column">
+                <div class="top-bar-chart">
+                    <div class="quick-report">
+                        <div class="quick-report-infos">
+                            <!--<p>My Balance</p>-->
+                            <!--<h3>$54,785</h3>-->
+                        </div>
+                        <!--<span class="bar2">3,6,3,8,9,7,10,6,5,4,7,6,5,3</span>-->
+                    </div>
+                    <div class="quick-report">
+                        <div class="quick-report-infos">
+                            <!--<p>New orders</p>-->
+                            <!--<h3>67,235</h3>-->
+                        </div>
+                        <!--<span class="bar">5,4,3,4,6,6,9,4,2,3,7,4</span>-->
+                    </div>
+                </div><!-- Top Bar Chart -->
+            </div>
+        </div>
+    </div><!-- Heading Sec -->
+    <div class="main-content-area" ng-init="get_post(def_post)">
+        <div class="blog-sec">
+            <div class="row">
+                <div ng-repeat="p in post">
+                    <div class="clearfix" ng-if="$index % 2 == 0"></div>
+                    <div class="col-md-6">
+                        <div class="blog">
+                            <div class="blog-thumb">
+                                <a href="{{p.url}}" title="{{p.title}}"><img ng-src="{{p.thumb}}" alt="" /></a>
+                            </div>
+                            <div class="blog-info" style="clear: both;">
+                                <i class="fa fa-calendar" aria-hidden="true"></i> {{p.date}} | <i class="fa fa-comment" aria-hidden="true"></i> {{p.comment_count}}
+                                <h2><a href="{{p.url}}" title="{{p.title}}">{{p.title}}</a></h2>
+                                <p ng-bind-html="trustAsHtml(p.short_ver)"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pagination">
+                        <ul>
+                            <li class="prev"><a href="" ng-click="prevpage()">Prev</a></li>
+                            <li class="next"><a href="" ng-click="nextpage()">Next</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- Panel Content -->
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        'use strict';
+
+        //*** Piety Mini Charts ***//
+        $(function() {
+
+            $('.bar').peity('bar', {
+                fill: ['#07bf29'],
+                height: ['40px'],
+                width: ['94px']
+            })
+
+            $('.bar2').peity('bar', {
+                fill: ['#404040'],
+                height: ['40px'],
+                width: ['94px']
+            })
+
+        });
+
+    });
+
+</script>
