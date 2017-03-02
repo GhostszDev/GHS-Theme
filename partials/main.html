@@ -1,13 +1,129 @@
-<div ng-init="get_post(def_post)" style="margin-top: 100px;">
-
-    <ul>
-        <li ng-repeat="p in post">
-
-            <h2>{{p.title}}<br/><small>{{p.date}}</small></h2>
-            <img ng-src="{{p.thumb}}">
-            <p ng-bind-html="trustAsHtml(p.short_ver)"></p>
-
-        </li>
-    </ul>
-
+<div id="progressBar">
+    <div class="loader"></div>
 </div>
+<div class="panel-content">
+    <div class="welcome-patti">
+        <!--<span><strong>Hey, Welcome back,</strong> it’s so great to see you again</span>-->
+        <ul class="breadcrumbs">
+            <!--<li><a href="#" title=""><i class="fa fa-home"></i></a></li>-->
+            <!--<li><a href="#" title="">Blank</a></li>-->
+        </ul>
+    </div><!-- Welcome Patti -->
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-4 column">
+                <div class="heading-profile">
+                    <!--<h2>Services</h2>-->
+                    <!--<span>Your Sample text</span>-->
+                </div>
+            </div>
+            <div class="col-md-8 column">
+                <div class="top-bar-chart">
+                    <div class="quick-report">
+                        <div class="quick-report-infos">
+                            <!--<p>My Balance</p>-->
+                            <!--<h3>$54,785</h3>-->
+                        </div>
+                        <!--<span class="bar2">3,6,3,8,9,7,10,6,5,4,7,6,5,3</span>-->
+                    </div>
+                    <div class="quick-report">
+                        <div class="quick-report-infos">
+                            <!--<p>New orders</p>-->
+                            <!--<h3>67,235</h3>-->
+                        </div>
+                        <!--<span class="bar">5,4,3,4,6,6,9,4,2,3,7,4</span>-->
+                    </div>
+                </div><!-- Top Bar Chart -->
+            </div>
+        </div>
+    </div><!-- Heading Sec -->
+    <div class="main-content-area">
+        <div class="row">
+
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active" ng-repeat="l in listbox">
+                        <img ng-src="{{l.img}}" alt="{{l.name}}">
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="widget white with-padding">
+                    <div class="service">
+                        <span><i class="ti-game"></i></span>
+                        <h3>Games</h3>
+                        <p>We strive to create the games that you want to play. Bring the fun like the games we love.</p>
+                        <a href="/games" title="" class="c-btn medium gray">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="widget white with-padding">
+                    <div class="service">
+                        <span><i class="ti-book"></i></span>
+                        <h3>Blogging</h3>
+                        <p>Where we connect with the fans throught the powering of blogging. Come check it out!</p>
+                        <a href="/blog" title="" class="c-btn medium purple">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="widget white with-padding">
+                    <div class="service">
+                        <span><i class="ti-palette"></i></span>
+                        <h3>Artwork/Portfolio</h3>
+                        <p>Where we show you all unreleased and uncoming games and/or art.</p>
+                        <a href="/portfolio" title="" class="c-btn medium gray">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- Panel Content -->
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        'use strict';
+
+        //*** Piety Mini Charts ***//
+        $(function() {
+
+            $('.bar').peity('bar', {
+                fill: ['#07bf29'],
+                height: ['40px'],
+                width: ['94px']
+            })
+
+            $('.bar2').peity('bar', {
+                fill: ['#404040'],
+                height: ['40px'],
+                width: ['94px']
+            })
+
+        });
+
+    });
+
+</script>

@@ -9,6 +9,7 @@ angular.module('GHS_mod', ['ngRoute'])
         $scope.user_stats = [];
         $scope.user = [];
         $scope.related = [];
+        $scope.listbox = [{name: 'All that glitter\' is gold!', img: 'http://eskipaper.com/images/stingray-4.jpg' }];
         $scope.post = [];
         $scope.notifications = [];
         $scope.employee = [
