@@ -1,29 +1,19 @@
 angular.module('GHS_mod', ['ngRoute'])
     .controller('GHS_ctrl', function($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce) {
 
-        $scope.main_url = '/wp-content/theme/GHS-Theme/partials/main.html';
-        $rootScope.post_id = '';
-
-        'use strict';
-        //***** Side Menu *****//
-        $scope.close = function() {
-            $('.side-menus li.menu-item-has-children > a').on('click', function () {
-                $(this).parent().siblings().children('ul').slideUp();
-                $(this).parent().siblings().removeClass('active');
-                $(this).parent().children('ul').slideToggle();
-                $(this).parent().toggleClass('active');
-                return false;
-            });
-        };
-
         //params
         $scope.openMenu = false;
         $scope.loggedIn = false;
+        $scope.main_url = '/wp-content/theme/GHS-Theme/partials/main.html';
+        $rootScope.post_id = '';
         $scope.user_stats = [];
         $scope.user = [];
         $scope.related = [];
         $scope.post = [];
         $scope.notifications = [];
+        $scope.employee = [
+            {name: 'Steven "Ghost" Rivera', position: 'Founder/Owner', desc: 'I want to inspire the massive by creating the greatest games I possibly can.', img: 'https://pbs.twimg.com/profile_images/834395726469877766/spmuKxO_.jpg', fb_link: 'https://www.facebook.com/GhostszLife', t_link: 'https://twitter.com/HoodieDork', yt_link: 'https://www.youtube.com/user/ghostszmusic?sub_confirmation=1'}
+        ];
         $scope.def_post = {
             post_num: 6,
             cat: ''
@@ -32,7 +22,6 @@ angular.module('GHS_mod', ['ngRoute'])
             post_num: 3,
             cat: cat
         };
-
         $scope.trustAsHtml = $sce.trustAsHtml;
 
         //get some post
@@ -178,100 +167,69 @@ angular.module('GHS_mod', ['ngRoute'])
 
         };
 
-    });
+        $(document).scrollTop(0);
 
-
-$(document).ready(function(){
-
-    'use strict';
-
-    //**** Slide Panel Toggle ***//
-    $(".slide-bar-btn").on('click', function(){
-        $(".slide-bar-btn").toggleClass('active');
-        $(".slide-panel").toggleClass('active');
-    });
-
-    //***** Clients lists Scroll *****//
-    $(function(){
-        $('#panel-scroll').slimScroll({
-            height: '100%',
-            wheelStep: 10,
-            distance : '0px',
-            color:'#878787',
-            railOpacity : '0.1',
-            size: '2px'
-        });
-    });
-
-    /* Copyright (c) 2013 ; Licensed  */
-    //Sort by first name
-    $(function() {
-        $.fn.sortList = function() {
-            var mylist = $(this);
-            var listitems = $('li', mylist).get();
-            listitems.sort(function(a, b) {
-                var compA = $(a).text().toUpperCase();
-                var compB = $(b).text().toUpperCase();
-                return (compA < compB) ? -1 : 1;
-            });
-            $.each(listitems, function(i, itm) {
-                mylist.append(itm);
-            });
-        }
-    });
-
-    //Sort by last name
-    $(function() {
-        $.fn.sortListLast = function() {
-            var mylist = $(this);
-            var listitems = $('li', mylist).get();
-            listitems.sort(function(a, b) {
-                var compA = $('.last-name', a).text().toUpperCase();
-                var compB = $('.last-name', b).text().toUpperCase();
-                return (compA < compB) ? -1 : 1;
-            });
-            $.each(listitems, function(i, itm) {
-                mylist.append(itm);
-            });
-        }
-    });
-
-    //Search filter
-    (function ($) {
-        // custom css expression for a case-insensitive contains()
-        jQuery.expr[':'].Contains = function(a,i,m){
-            return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
-        };
-
-
-        function listFilter(searchDir, list) {
-            var form = $("<form>").attr({"class":"filterform","action":"#"}),
-                input = $("<input>").attr({"class":"filterinput","type":"text","placeholder":"Live Search Mails"});
-            $(form).append(input).appendTo(searchDir);
-
-            $(input)
-                .change( function () {
-                    var filter = $(this).val();
-                    if(filter) {
-                        $(list).find("li:not(:Contains(" + filter + "))").slideUp();
-                        $(list).find("li:Contains(" + filter + ")").slideDown();
-                    } else {
-                        $(list).find("li").slideDown();
-                    }
-                    return false;
+        var loaded = 0;
+        var imgCounter = $(".main-content img").length;
+        if(imgCounter > 0){
+            console.log(imgCounter);
+            function doProgress() {
+                $(".main-content img").load(function() {
+                    loaded++;
+                    var newWidthPercentage = (loaded / imgCounter) * 100;
+                    animateLoader(newWidthPercentage + '%');
                 })
-                .keyup( function () {
-                    $(this).change();
+            }
+            function animateLoader(newWidth) {
+                $("#progressBar").width(newWidth);
+                if(imgCounter === loaded){
+                    setTimeout(function(){
+                        $("#progressBar").animate({opacity:0});
+                    },500);
+                }
+            }
+            doProgress();
+        }else{
+            setTimeout(function(){
+                $("#progressBar").css({
+                    "opacity":0,
+                    "width":"100%"
                 });
+            },500);
         }
 
+        // Activates Tooltips for Social Links
+        $('[data-toggle="tooltip"]').tooltip();
 
-        //Slide Panel Search Email
-        $(function () {
-            listFilter($("#searchMail"), $("#mail-list"));
+        // Activates Popovers for Social Links
+        $('[data-toggle="popover"]').popover();
+
+        //*** Refresh Content ***//
+        $('.refresh-content').on("click", function(){
+            $(this).parent().parent().addClass("loading-wait").delay(3000).queue(function(next){
+                $(this).removeClass("loading-wait");
+                next();
+            });
+            $(this).addClass("fa-spin").delay(3000).queue(function(next){
+                $(this).removeClass("fa-spin");
+                next();
+            });
         });
 
-    }(jQuery));
+        //*** Expand Content ***//
+        $('.expand-content').on("click", function(){
+            $(this).parent().parent().toggleClass("expand-this");
+        });
 
+        //*** Delete Content ***//
+        $('.close-content').on("click", function(){
+            $(this).parent().parent().slideUp();
+        });
 
-});
+        // Activates Tooltips for Social Links
+        $('.tooltip-social').tooltip({
+            selector: "a[data-toggle=tooltip]"
+        });
+
+    }
+);

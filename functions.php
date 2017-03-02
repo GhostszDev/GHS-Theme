@@ -20,9 +20,10 @@ function ghs_scrs() {
     wp_enqueue_script('angularjs', get_stylesheet_directory_uri() . '/js/angular.min.js');
     wp_enqueue_script('angularjs-resource', get_stylesheet_directory_uri() . '/js/angular-resource.min.js');
     wp_enqueue_script('angularjs-route',  get_stylesheet_directory_uri() . '/js/angular-route.min.js');
+    wp_enqueue_script('BSJS',  get_stylesheet_directory_uri() . '/js/bootstrap.min.js');
     wp_enqueue_script('main', get_stylesheet_directory_uri() . '/js/main.js');
     wp_enqueue_script('app', get_stylesheet_directory_uri() . '/js/app.js');
-    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'main', 'app'), true);
+    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'main', 'app', 'BSJS'), true);
 
     //localization of scripts
     wp_localize_script('GhsJS', 'myLocalized', array('partials' => trailingslashit( get_template_directory_uri() ) . 'partials/'));
