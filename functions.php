@@ -21,9 +21,10 @@ function ghs_scrs() {
     wp_enqueue_script('angularjs-resource', get_stylesheet_directory_uri() . '/js/angular-resource.min.js');
     wp_enqueue_script('angularjs-route',  get_stylesheet_directory_uri() . '/js/angular-route.min.js');
     wp_enqueue_script('BSJS',  get_stylesheet_directory_uri() . '/js/bootstrap.min.js');
+    wp_enqueue_script('UIBS',  get_stylesheet_directory_uri() . '/js/ui-bootstrap.min.js');
     wp_enqueue_script('main', get_stylesheet_directory_uri() . '/js/main.js');
     wp_enqueue_script('app', get_stylesheet_directory_uri() . '/js/app.js');
-    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'main', 'app', 'BSJS'), true);
+    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'main', 'app', 'BSJS', 'UIBS'), true);
 
     //localization of scripts
     wp_localize_script('GhsJS', 'myLocalized', array('partials' => trailingslashit( get_template_directory_uri() ) . 'partials/'));
@@ -44,6 +45,9 @@ function ghs_head(){
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" type="image/x-icon" href="https://ghostszmusic.com/wp-content/uploads/2016/03/favicon.ico" />
     <base href="<?php echo site_url('/'); ?>">
+    <script>
+        var site = "<?php echo site_url('/'); ?>";
+    </script>
 
     <?php if(is_page('login')){ ?>
         <meta name="google-signin-client_id" content="979177383237-je61denbtu2te7ilni37cj1sdcfqt67n.apps.googleusercontent.com">

@@ -1,15 +1,16 @@
-angular.module('GHS_mod', ['ngRoute'])
+angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
     .controller('GHS_ctrl', function($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce) {
 
         //params
         $scope.openMenu = false;
+        $scope.domain = site;
         $scope.loggedIn = false;
         $scope.main_url = '/wp-content/theme/GHS-Theme/partials/main.html';
         $rootScope.post_id = '';
         $scope.user_stats = [];
         $scope.user = [];
         $scope.related = [];
-        $scope.listbox = [{name: 'All that glitter\' is gold!', img: 'http://eskipaper.com/images/stingray-4.jpg' }];
+        $scope.listbox = [];
         $scope.post = [];
         $scope.notifications = [];
         $scope.employee = [
@@ -29,7 +30,7 @@ angular.module('GHS_mod', ['ngRoute'])
         $scope.get_post = function(post){
 
             $http({
-                url: "http://ghostszmusic.dev/wp-json/ghs_api/v1/ghs_post",
+                url: $scope.domain + "wp-json/ghs_api/v1/ghs_post",
                 method: "POST",
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded'
@@ -74,7 +75,7 @@ angular.module('GHS_mod', ['ngRoute'])
 
 
             $http({
-                url: "http://ghostszmusic.dev/wp-json/ghs_api/v1/login",
+                url: $scope.domain + "wp-json/ghs_api/v1/login",
                 method: "POST",
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded'
@@ -105,7 +106,7 @@ angular.module('GHS_mod', ['ngRoute'])
         $scope.signup = function (user) {
 
             $http({
-                url: "http://ghostszmusic.dev/wp-json/ghs_api/v1/login",
+                url: $scope.domain + "wp-json/ghs_api/v1/login",
                 method: "POST",
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded'
@@ -138,7 +139,7 @@ angular.module('GHS_mod', ['ngRoute'])
         $scope.postComment = function(comment){
 
             $http({
-                url: "http://ghostszmusic.dev/wp-json/ghs_api/v1/post_comment",
+                url: $scope.domain + "wp-json/ghs_api/v1/post_comment",
                 method: "POST",
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded'
@@ -157,6 +158,31 @@ angular.module('GHS_mod', ['ngRoute'])
                     if (response.data.success) {
                         $scope.user_stats = response.data.user_info.data;
                         $scope.loggedIn = true;
+                    } else {
+                        console.log(response.data.error_message);
+                    }
+
+                })
+                .catch(function () {
+
+                });
+
+        };
+
+        //carousel items
+        $scope.carouselItems = function(){
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/carouselItems",
+                method: "GET",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(function(response) {
+
+                    if (response.data.success) {
+                        $scope.listbox = response.data.listbox;
                     } else {
                         console.log(response.data.error_message);
                     }
@@ -231,6 +257,21 @@ angular.module('GHS_mod', ['ngRoute'])
         $('.tooltip-social').tooltip({
             selector: "a[data-toggle=tooltip]"
         });
+
+        var handle_nav = function(e) {
+            e.preventDefault();
+            var nav = $(this);
+            nav.parents('.carousel').carousel(nav.data('slide'));
+        };
+
+        $('.carousel').carousel({
+            interval: 5000,
+            pause: "hover",
+            wrap: true
+        })
+            .on('click', '.carousel-control', handle_nav);
+
+        $('#1').addClass('active');
 
     }
 );
