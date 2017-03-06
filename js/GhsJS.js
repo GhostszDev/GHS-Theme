@@ -182,7 +182,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 .then(function(response) {
 
                     if (response.data.success) {
-                        $scope.listbox = response.data.listbox;
+                        $scope.listbox = response.data.post;
                     } else {
                         console.log(response.data.error_message);
                     }
