@@ -99,6 +99,7 @@
                                 }
                             ?>
                             fa-1x"></i> <?php echo $cat_name; ?> | <i class="fa fa-comment" aria-hidden="true"></i> <?php echo get_comments_number(); ?>
+                        <br/>
                         <h2><?php the_title(); ?></h2>
                         <p><?php the_content(); ?></p>
                         <div class="post-tags">
