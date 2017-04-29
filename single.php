@@ -63,6 +63,9 @@
                     <script>
                         var post_id = <?php echo get_the_ID(); ?>;
                         var cat = "<?php echo $cats[0]->term_id; ?>";
+
+                        console.log(post_id);
+
                     </script>
                     <div class="blog-thumb">
                         <?php if ( has_post_thumbnail() ) { ?>
@@ -117,38 +120,9 @@
 
             <div ng-include="'/wp-content/themes/GHS-Theme/partials/related.html'">
             </div>
-
-            <div class="comment-form">
-                <div class="heading3">
-                    <h3>Add your Comment</h3>
-                    <span>Easy to Customize</span>
-                </div>
-                <form>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>
-                                <i class="fa fa-user"></i>
-                                <input type="text" placeholder="Name">
-                            </label>
-                        </div>
-                        <div class="col-md-6">
-                            <label>
-                                <i class="fa fa-at"></i>
-                                <input type="text" placeholder="Email Id">
-                            </label>
-                        </div>
-                        <div class="col-md-12">
-                            <label>
-                                <i class="fa fa-pencil"></i>
-                                <textarea placeholder="Your Message"></textarea>
-                            </label>
-                        </div>
-                        <div class="col-md-12">
-                            <button class="theme-btn" type="submit">POST NOW</button>
-                        </div>
-                    </div>
-                </form>
-            </div><!-- Comment Form -->
+            
+            <div ng-include="'/wp-content/themes/GHS-Theme/partials/comments.html'">
+            </div>
         </div>
     </div><!-- Panel Content -->
     <script type="text/javascript">

@@ -171,7 +171,12 @@
 <!--     </span>-->
     <div class="admin-name-hello">
         <?php if(is_user_logged_in()){ ?>
-        <span> <img src="http://placehold.it/72x72" alt="" /> </span>
+            <script>
+                var user_id = "<?php echo get_current_user_id(); ?>";
+//                console.log(user_id);
+            </script>
+
+        <span ng-init="getUser();"> <img ng-src="{{user.user_icon}}" /> </span>
         <?php }else{ ?>
             <p style="margin-top: 13px;"><a href="<?php echo site_url('/login'); ?>"><i class="fa fa-sign-in"> Login</i></a></p>
         <?php } ?>
@@ -248,17 +253,18 @@
                 <p>Games, Music & More</p>
             </a>
         </div>
+        <?php if(is_user_logged_in()){ ?>
         <div class="admin-action-bar">
             <div class="admin-image">
-                <img src="http://placehold.it/72x72" alt="" />
+                <img ng-src="{{user.user_icon_big}}" alt="" />
             </div>
             <div class="admin-action-info">
                 <span>Welcome</span>
-                <h3>JAFIR DOE</h3>
+                <h3>{{user.userName}}</h3>
                 <ul>
-                    <li><a data-toggle="tooltip" data-placement="bottom" title="Go to Inbox" href="#/pages/inbox"><i class="fa fa-envelope-o"></i></a></li>
-                    <li><a data-toggle="tooltip" data-placement="bottom" title="Go to Profile" href="#/pages/profile"><i class="fa fa-user"></i></a></li>
-                    <li><a data-toggle="tooltip" data-placement="bottom" title="Go to Profile" href="<?php echo wp_logout_url( home_url() ); ?>"><i class="fa fa-sign-out"></i></a></li>
+                    <li><a data-toggle="tooltip" data-placement="bottom" title="Go to Inbox" href="#"><i class="fa fa-envelope-o"></i></a></li>
+                    <li><a data-toggle="tooltip" data-placement="bottom" title="Go to Profile" href="#"><i class="fa fa-user"></i></a></li>
+                    <li><a data-toggle="tooltip" data-placement="bottom" title="Log Out" href="<?php echo wp_logout_url( home_url() ); ?>"><i class="fa fa-sign-out"></i></a></li>
 <!--                    <li><a data-toggle="tooltip" data-placement="bottom" title="Full Screen" id="toolFullScreen"><i class="fa fa-arrows-alt"></i></a></li>-->
                 </ul>
             </div>
@@ -271,6 +277,7 @@
 <!--                </ul>-->
             </div>
         </div>
+        <?php } ?>
 
         <div class="search-form">
             <input ng-model="search.text" type="text" placeholder="Search" style="width: 211px !important;"/>
@@ -308,6 +315,7 @@
                         <a href="https://ghostdevblog.tumblr.com/" title="Follow us on Tumblr"><i class="fa fa-tumblr"></i></a>
                         <a href="https://www.instagram.com/ghostszmusic/" title="Follow us on Instagram"><i class="fa fa-instagram"></i></a>
                         <a href="https://www.youtube.com/user/ghostszmusic?sub_confirmation=1" title="Subscribe to us on Youtube"><i class="fa fa-youtube-play"></i></a>
+                        <a href="https://github.com/GhostszDev" title="GhostszMusic on Github"><i class="fa fa-github"></i></a>
                     </div><!-- Fancy Social -->
                 </li>
 <!--                <li class="menu-item-has-children">-->

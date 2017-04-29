@@ -1,12 +1,12 @@
 angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
-    .controller('GHS_ctrl', function($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce) {
+    .controller('GHS_ctrl', function($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce, $window) {
 
         //params
         $scope.openMenu = false;
         $scope.domain = site;
         $scope.loggedIn = false;
         $scope.main_url = '/wp-content/theme/GHS-Theme/partials/main.html';
-        $rootScope.post_id = '';
+        $rootScope.post_id = post_id;
         $scope.user_stats = [];
         $scope.user = [];
         $scope.related = [];
@@ -25,6 +25,36 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             cat: cat
         };
         $scope.trustAsHtml = $sce.trustAsHtml;
+        $scope.comments = [];
+        $scope.comment = '';
+
+        //get userData
+        $scope.getUser = function(){
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/getuserdata",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    user_ID: user_id
+                })
+            })
+                .then(function(response) {
+
+                    if (response.data.success) {
+                        $scope.user = response.data.user;
+                    } else {
+                        console.log(response.data.error_message);
+                    }
+
+                })
+                .catch(function () {
+
+                });
+
+        };
 
         //get some post
         $scope.get_post = function(post){
@@ -88,13 +118,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             })
                 .then(function(response) {
 
-                    if (response.data.success) {
-                        $scope.user_stats = response.data.user_info.data;
-                        $scope.loggedIn = true;
-                        window.location.href = '/index.php';
-                    } else {
-                        console.log(response.data.error_message);
-                    }
+                    $(window).attr('location', $scope.domain);
+                    // console.log('success: ' + response.data.success);
 
                 })
                 .catch(function () {
@@ -105,8 +130,10 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         //signup function
         $scope.signup = function (user) {
 
+            user.birthday = user.year + '-' + user.month + '-' + user.date;
+
             $http({
-                url: $scope.domain + "wp-json/ghs_api/v1/login",
+                url: $scope.domain + "wp-json/ghs_api/v1/signup",
                 method: "POST",
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded'
@@ -117,14 +144,40 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     last_name: user.last_name,
                     email: user.email,
                     password: user.password,
-                    mailing: user.mailing
+                    mailing: user.mailing,
+                    gender: user.gender,
+                    birthday: user.birthday
+                })
+            })
+                .then(function(response) {
+
+                    // $(window).attr('location', $scope.domain);
+
+                })
+                .catch(function () {
+
+                });
+        };
+
+        //gets single post
+        $scope.getSinglePost = function(postID){
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/singlePost",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    postID: postID
                 })
             })
                 .then(function(response) {
 
                     if (response.data.success) {
-                        $scope.user_stats = response.data.user_info.data;
-                        $scope.loggedIn = true;
+
+                        $scope.current_post = response.data.post;
+
                     } else {
                         console.log(response.data.error_message);
                     }
@@ -133,10 +186,39 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 .catch(function () {
 
                 });
+
+        };
+
+        //get comment list
+        $scope.getCommentList = function(){
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/getComments",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    postID: $rootScope.post_id
+                })
+            })
+                .then(function(response) {
+
+                    if (response.data.success) {
+                        $scope.comments = response.data.comment;
+                    } else {
+                        console.log(response.data.error_message);
+                    }
+
+                })
+                .catch(function () {
+
+                });
+
         };
 
         //post comment
-        $scope.postComment = function(comment){
+        $scope.postComment = function(user, type, comment, orginialUser){
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/post_comment",
@@ -145,12 +227,12 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     'content-type': 'application/x-www-form-urlencoded'
                 },
                 data: $httpParamSerializerJQLike({
-                    comment_id: '',
-                    user_name: '',
-                    user_email: '',
-                    comment: '',
-                    comment_type: '',
-                    user_id: ''
+                    postID: $rootScope.post_id,
+                    user_name: user.userName,
+                    user_email: user.email,
+                    comment: comment,
+                    comment_parent: type,
+                    user_id: user.ID
                 })
             })
                 .then(function(response) {
@@ -165,6 +247,9 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 })
                 .catch(function () {
 
+                })
+                .finally(function(){
+                    $scope.getCommentList();
                 });
 
         };

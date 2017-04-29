@@ -11,6 +11,7 @@ function ghs_scrs() {
     //styles
     wp_enqueue_style( 'bootstrap', get_stylesheet_directory_uri() . '/css/bootstrap.min.css');
     wp_enqueue_style( 'icons', get_stylesheet_directory_uri() . '/css/icons.css');
+    wp_enqueue_style( 'datecss', get_stylesheet_directory_uri() . '/css/bootstrap-datetimepicker.min.css');
     wp_enqueue_style( 'main', get_stylesheet_directory_uri() . '/css/main.css');
     wp_enqueue_style( 'responsive', get_stylesheet_directory_uri() . '/css/responsive.css');
     wp_enqueue_style( 'style', get_stylesheet_directory_uri() . '/style.css');
@@ -22,9 +23,11 @@ function ghs_scrs() {
     wp_enqueue_script('angularjs-route',  get_stylesheet_directory_uri() . '/js/angular-route.min.js');
     wp_enqueue_script('BSJS',  get_stylesheet_directory_uri() . '/js/bootstrap.min.js');
     wp_enqueue_script('UIBS',  get_stylesheet_directory_uri() . '/js/ui-bootstrap.min.js');
-    wp_enqueue_script('main', get_stylesheet_directory_uri() . '/js/main.js');
+//    wp_enqueue_script('main', get_stylesheet_directory_uri() . '/js/main.js');
+    wp_enqueue_script('moment', get_stylesheet_directory_uri() . '/js/moment.js');
+    wp_enqueue_script('date', get_stylesheet_directory_uri() . '/js/bootstrap-datetimepicker.min.js');
     wp_enqueue_script('app', get_stylesheet_directory_uri() . '/js/app.js');
-    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'main', 'app', 'BSJS', 'UIBS'), true);
+    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'app', 'BSJS', 'UIBS', 'moment', 'date'), true);
 
     //localization of scripts
     wp_localize_script('GhsJS', 'myLocalized', array('partials' => trailingslashit( get_template_directory_uri() ) . 'partials/'));
@@ -54,6 +57,7 @@ function ghs_head(){
     <base href="<?php echo site_url('/'); ?>">
     <script>
         var site = "<?php echo site_url('/'); ?>";
+        var post_id = '';
     </script>
 
     <?php if(is_page('login')){ ?>
@@ -80,19 +84,29 @@ function ghs_theme_support(){
 
 }
 
-function blockusers_init() {
-    if ( is_admin() && ! current_user_can( 'administrator' ) &&
-        ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-        wp_redirect( home_url() );
-        exit;
+/* redirect users to front page after login */
+function redirect_to_front_page() {
+
+    global $redirect_to;
+    if (!isset($_GET['redirect_to'])) {
+        $redirect_to = get_option('siteurl');
     }
+}
+
+function go_home(){
+
+    wp_redirect( home_url() );
+    exit();
+
 }
 
 //adding actions
 add_action('wp_head', 'ghs_head');
 add_action('after_setup_theme', 'ghs_theme_support');
 add_action( 'wp_enqueue_scripts', 'ghs_scrs' );
-add_action( 'init', 'blockusers_init' );
+//add_action('loop_start', 'blockusers_init');
+add_action('login_form', 'redirect_to_front_page');
+add_action('wp_logout','go_home');
 
 //adding filters
 add_filter('show_admin_bar', '__return_false');

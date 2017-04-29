@@ -1,0 +1,53 @@
+<div class="related-post">
+    <div class="blog-sec">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="heading3">
+                    <h3>Comments</h3>
+                    <span></span>
+                </div>
+                <div class="widget no-padding">
+                    <div class="status-upload">
+                        <form class="ng-pristine ng-valid">
+                            <textarea placeholder="Leave a comment here!" ng-model="comment"></textarea>
+                            <button type="submit" class="ghs-purple" ng-click="postComment(user, 0, comment);"><i class="ti-comment"></i> Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="widget no-padding blank">
+                    <div class="timeline-sec" ng-init="getCommentList();">
+                        <ul>
+                            <li ng-repeat="com in comments">
+                                <div class="timeline">
+                                    <div class="user-timeline">
+                                        <span><img ng-src="{{com.user_img}}" alt="" /></span>
+                                    </div>
+                                    <div class="timeline-detail">
+                                        <div class="timeline-head">
+                                            <h3>{{com.user}}<span>{{com.date}}</span></h3>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <p>{{com.comment}}</p>
+                                            <div data-toggle="buttons" class="btn-group btn-group-sm">
+                                                <label class="btn btn-default">
+                                                    <input type="radio" checked=""  name="options" /><i class="ti-comments"></i> Reply
+                                                </label>
+                                                <label class="btn btn-default">
+                                                    <input type="radio"  name="options" /> <i class="ti-thumb-up"></i> Like
+                                                </label>
+                                            </div>
+                                            <form class="post-reply">
+                                                <textarea placeholder="Write your comment"></textarea>
+                                                <i class="ti-comments"></i>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- comment section -->
