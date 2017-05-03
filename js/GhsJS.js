@@ -27,6 +27,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
         $scope.trustAsHtml = $sce.trustAsHtml;
         $scope.comments = [];
+        $scope.contact = [];
         $scope.comment = '';
 
         //get userData
@@ -280,6 +281,38 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
         };
 
+        //contact us form
+        $scope.contactUs = function(contact){
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/contactUs",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    name: contact.name,
+                    email: contact.email,
+                    msg: contact.msg
+                })
+            })
+                .then(function(response) {
+
+                    if (response.data.success) {
+                        $scope.contact = [];
+                        $scope.message = response.data.message;
+                    } else {
+                        console.log(response.data.error_message);
+                    }
+
+                })
+                .catch(function () {
+
+                });
+
+        };
+
+        //grabbing the game list
         $scope.grabGamesList = function(){
 
             $http({
