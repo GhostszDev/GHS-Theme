@@ -434,7 +434,7 @@
 <!--                </li>-->
             </ul>
         </nav>
-        <span class="footer-line">2016 Copyright Dubli by <a title="" href="http://themeforest.net/user/themenum/portfolio?ref=themenum">Themenum</a></span>
+        <span class="footer-line">&copy; 2014 – <?php echo date('Y'); ?> <br />GhostszMusic INC</span>
     </div>
 </header>
 <script type='text/javascript'>
