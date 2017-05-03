@@ -70,7 +70,8 @@ function ghs_head(){
 function ghs_theme_support(){
 
     add_theme_support( 'html5', array(
-        'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', ) );
+        'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' )
+    );
 
     add_theme_support('post-formats', array(
         'aside',

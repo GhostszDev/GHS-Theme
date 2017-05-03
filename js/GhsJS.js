@@ -12,6 +12,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $scope.related = [];
         $scope.listbox = [];
         $scope.post = [];
+        $scope.gameList = [];
         $scope.notifications = [];
         $scope.employee = [
             {name: 'Steven "Ghost" Rivera', position: 'Founder/Owner', desc: 'I want to inspire the massive by creating the greatest games I possibly can.', img: 'https://pbs.twimg.com/profile_images/834395726469877766/spmuKxO_.jpg', fb_link: 'https://www.facebook.com/GhostszLife', t_link: 'https://twitter.com/HoodieDork', yt_link: 'https://www.youtube.com/user/ghostszmusic?sub_confirmation=1'}
@@ -268,6 +269,30 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
                     if (response.data.success) {
                         $scope.listbox = response.data.post;
+                    } else {
+                        console.log(response.data.error_message);
+                    }
+
+                })
+                .catch(function () {
+
+                });
+
+        };
+
+        $scope.grabGamesList = function(){
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/grabGameList",
+                method: "GET",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(function(response) {
+
+                    if (response.data.success) {
+                        $scope.gameList = response.data.gameList;
                     } else {
                         console.log(response.data.error_message);
                     }
