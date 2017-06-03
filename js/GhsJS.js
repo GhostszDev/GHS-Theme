@@ -29,6 +29,14 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $scope.comments = [];
         $scope.contact = [];
         $scope.comment = '';
+        $scope.friends = [];
+        $scope.feed = [];
+        $scope.com = "";
+
+        //get safe html back
+        $scope.safe = function(x) {
+            return $sce.trustAsHtml(x);
+        };
 
         //get userData
         $scope.getUser = function(){
@@ -332,6 +340,100 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
                 })
                 .catch(function () {
+
+                });
+
+        };
+
+        //get friends list
+        $scope.friendsList = function(user){
+
+            console.log($scope.user);
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/friendsList",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    userID: 1
+                })
+            })
+                .then(function(response) {
+
+                    if (response.data.success) {
+                        $scope.friends = response.data.friend;
+                    } else {
+                        console.log(response.data.error_message);
+                    }
+
+                })
+                .catch(function () {
+
+                });
+
+        };
+
+        //get users feed
+        $scope.userFeed = function(user){
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/userFeed",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    userID: user.ID
+                })
+            })
+                .then(function(response) {
+
+                    if (response.data.success) {
+                        $scope.feed = response.data.feed;
+                    } else {
+                        console.log(response.data.error_message);
+                    }
+
+                })
+                .catch(function () {
+
+                });
+
+        };
+
+        //user feed comments
+        $scope.userFeedCom = function(com, par){
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/userUpdate",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    userID: $scope.user.ID,
+                    comment: com,
+                    comment_parent: par
+                })
+            })
+                .then(function(response) {
+
+                    if (response.data.success) {
+                        $scope.com = "";
+
+                    } else {
+                        console.error(response.data.error_message);
+                    }
+
+                })
+                .catch(function () {
+
+                })
+                .finally(function(){
+
+                    $scope.userFeed($scope.user.ID);
 
                 });
 

@@ -7687,7 +7687,6 @@ blockquote span a {
     width: 100%;
 }
 .profile-head {
-    background-image: url("../images/resource/profile-bg.jpg");
     background-size: 100% 100%;
     min-height: 226px;
     overflow: hidden;

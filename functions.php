@@ -111,3 +111,4 @@ add_action('wp_logout','go_home');
 
 //adding filters
 add_filter('show_admin_bar', '__return_false');
+add_filter('comment_flood_filter', '__return_false');
