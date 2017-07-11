@@ -37,7 +37,7 @@
             </div>
         </div>
     </div><!-- Heading Sec -->
-    <div class="main-content-area" ng-init="get_post(def_post)">
+    <div class="main-content-area" ng-init="get_post(def_post, 0)">
         <div class="blog-sec">
             <div class="row">
                 <div ng-repeat="p in post">
@@ -60,7 +60,7 @@
                 <div class="col-md-12">
                     <div class="pagination">
                         <ul>
-                            <li class="prev"><a href="" ng-click="prevpage()">Prev</a></li>
+                            <li class="prev" ng-hide="offset == 0"><a href="" ng-click="prevpage()">Prev</a></li>
                             <li class="next"><a href="" ng-click="nextpage()">Next</a></li>
                         </ul>
                     </div>

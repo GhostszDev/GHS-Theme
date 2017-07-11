@@ -21,6 +21,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             post_num: 6,
             cat: ''
         };
+        $scope.offset = 0;
         $scope.related_def = {
             post_num: 3,
             cat: cat
@@ -67,7 +68,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //get some post
-        $scope.get_post = function(post){
+        $scope.get_post = function(post, offset){
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/ghs_post",
@@ -78,7 +79,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 data: $httpParamSerializerJQLike({
                     post_num: post.post_num,
                     cat: post.cat,
-                    ex: post_id
+                    ex: post_id,
+                    offset: offset
 
                 })
             })
@@ -439,6 +441,29 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
         };
 
+        //next page for blog pagination
+        $scope.nextpage = function () {
+
+            $scope.offset += 6;
+
+            $scope.get_post($scope.def_post, $scope.offset)
+
+        };
+
+        //prev page for blog pagination
+        $scope.prevpage = function () {
+
+            if($scope.offset > 0) {
+
+                $scope.offset -= 6;
+                $scope.get_post($scope.def_post, $scope.offset);
+
+            }
+
+        };
+
+
+
         $(document).scrollTop(0);
 
         var loaded = 0;
@@ -461,7 +486,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 }
             }
             doProgress();
-        }else{
+        }
+        else{
             setTimeout(function(){
                 $("#progressBar").css({
                     "opacity":0,
