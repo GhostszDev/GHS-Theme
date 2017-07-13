@@ -1,3 +1,15 @@
+var blobImg;
+
+function encodeImageFileAsURL(element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        console.log('RESULT', reader.result);
+        blobImg = reader.result;
+    };
+    reader.readAsDataURL(file);
+}
+
 angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
     .controller('GHS_ctrl', function($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce, $window) {
 
@@ -33,6 +45,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $scope.friends = [];
         $scope.feed = [];
         $scope.com = "";
+        $scope.blobImg = "";
 
         //get safe html back
         $scope.safe = function(x) {
@@ -462,17 +475,34 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
         };
 
+        $scope.uploadImg = function(){
 
-        function encodeImageFileAsURL(element) {
-            var file = element.files[0];
-            var reader = new FileReader();
-            reader.onloadend = function() {
-                console.log('RESULT', reader.result)
-            };
-            reader.readAsDataURL(file);
-        }
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/updateImg",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    blobImg: blobImg
+                })
+            })
+                .then(function(response) {
 
-        // <input type="file" onchange="encodeImageFileAsURL(this)" />
+                    if (response.data.success) {
+
+                        $scope.current_post = response.data.post;
+
+                    } else {
+                        console.log(response.data.error_message);
+                    }
+
+                })
+                .catch(function () {
+
+                });
+
+        };
 
         $(document).scrollTop(0);
 
