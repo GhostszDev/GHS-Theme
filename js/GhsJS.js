@@ -1,16 +1,52 @@
-var blobImg;
-
-function encodeImageFileAsURL(element) {
-    var file = element.files[0];
-    var reader = new FileReader();
-    reader.onloadend = function() {
-        console.log('RESULT', reader.result);
-        blobImg = reader.result;
-    };
-    reader.readAsDataURL(file);
-}
-
 angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
+    .directive('fileInput', function ($parse, $http, $httpParamSerializerJQLike) {
+        return{
+            link:function ($scope, element, attrs) {
+                element.on("change", function (event) {
+                    var files = event.target.files;
+                    var reader = new FileReader();
+
+                    reader.onloadend = function () {
+
+                        console.log('Result', reader.result);
+
+                        // $http({
+                        //     url: $scope.domain + "wp-json/ghs_api/v1/uploadMedia",
+                        //     method: "POST",
+                        //     headers: {
+                        //         'content-type': 'application/x-www-form-urlencoded'
+                        //     },
+                        //     data: $httpParamSerializerJQLike({
+                        //         content: reader.result,
+                        //         userID: user_id,
+                        //         type: reader.type,
+                        //         mediaType: files[0].typeName
+                        //     })
+                        // })
+                        //     .then(function(response) {
+                        //
+                        //         if (response.data.success) {
+                        //
+                        //             console.log(response.data);
+                        //
+                        //         } else {
+                        //             console.log(response.data);
+                        //         }
+                        //
+                        //     })
+                        //     .catch(function () {
+                        //
+                        //     });
+                    };
+
+                    reader.readAsDataURL(files[0]);
+
+                    $parse(attrs.fileInput).assign(element[0].files);
+                    $scope.$apply();
+                });
+            }
+        }
+    })
     .controller('GHS_ctrl', function($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce, $window) {
 
         //params
@@ -46,6 +82,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $scope.feed = [];
         $scope.com = "";
         $scope.blobImg = "";
+        $scope.files = "";
+        $scope.fbData = {};
 
         //get safe html back
         $scope.safe = function(x) {
@@ -152,6 +190,20 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 });
         };
 
+        $scope.logout = function(){
+
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+
+                    FB.logout(function(response) {
+                        // Person is now logged out
+                    });
+
+                }
+            });
+
+        };
+
         //signup function
         $scope.signup = function (user) {
 
@@ -171,7 +223,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     password: user.password,
                     mailing: user.mailing,
                     gender: user.gender,
-                    birthday: user.birthday
+                    birthday: user.birthday,
+                    FBaccess: user.FBaccess
                 })
             })
                 .then(function(response) {
@@ -484,7 +537,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     'content-type': 'application/x-www-form-urlencoded'
                 },
                 data: $httpParamSerializerJQLike({
-                    blobImg: blobImg
+                    blobImg: files
                 })
             })
                 .then(function(response) {
@@ -501,6 +554,71 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 .catch(function () {
 
                 });
+
+        };
+
+        //Facebook login
+        $scope.fbLogin = function(){
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+
+                    console.log('Logged In');
+
+                }
+                else {
+                    // $scope.fbData.user_ID = response.authResponse.userID;
+                    FB.login(function(response) {
+
+                        // handle the response
+                        // console.log(response.authResponse);
+                        $scope.fbData.userID = response.authResponse.userID;
+                        $scope.fbData.FBaccess = response.authResponse.accessToken;
+                        // console.log($scope.fbData);
+
+                        FB.api(
+                            "/" + $scope.fbData.userID + "?fields=email,birthday,first_name,last_name,gender,website",
+                            function (response) {
+                                if (response && !response.error) {
+
+                                    /* handle the result */
+                                    $scope.fbData.first_name = response.first_name;
+                                    $scope.fbData.last_name = response.last_name;
+                                    $scope.fbData.email = response.email;
+                                    $scope.fbData.gender = response.gender;
+                                    $scope.fbData.birthday = response.birthday;
+
+                                    console.log($scope.fbData);
+
+                                } else {
+
+                                    console.error(response);
+
+                                }
+                            }
+                        );
+
+                        // FB.api(
+                        //     "/" + $scope.fbData.userID + "/permissions",
+                        //     function (response) {
+                        //         if (response && !response.error) {
+                        //             /* handle the result */
+                        //             console.log(response);
+                        //         } else {
+                        //             console.log(response);
+                        //         }
+                        //     }
+                        // );
+
+                    }, {scope: 'public_profile, email, user_birthday, user_games_activity, user_friends'});
+
+                }
+            });
+        };
+
+        //returns string into json format
+        $scope.jsonReturn = function(data) {
+
+            return JSON.stringify(data);
 
         };
 
@@ -583,6 +701,25 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             .on('click', '.carousel-control', handle_nav);
 
         $('#1').addClass('active');
+
+        //FaceBook SDK
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId            : '220252511670899',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v2.10'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
 
     }
 );

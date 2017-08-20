@@ -264,7 +264,7 @@
                 <ul>
                     <li><a data-toggle="tooltip" data-placement="bottom" title="Go to Inbox" href="#"><i class="fa fa-envelope-o"></i></a></li>
                     <li><a data-toggle="tooltip" data-placement="bottom" title="Go to Profile" href="<?php echo site_url('/user-profile'); ?>"><i class="fa fa-user"></i></a></li>
-                    <li><a data-toggle="tooltip" data-placement="bottom" title="Log Out" href="<?php echo wp_logout_url( home_url() ); ?>"><i class="fa fa-sign-out"></i></a></li>
+                    <li><a data-toggle="tooltip" data-placement="bottom" title="Log Out" ng-click="logout()" href="<?php echo wp_logout_url( home_url() ); ?>"><i class="fa fa-sign-out"></i></a></li>
 <!--                    <li><a data-toggle="tooltip" data-placement="bottom" title="Full Screen" id="toolFullScreen"><i class="fa fa-arrows-alt"></i></a></li>-->
                 </ul>
             </div>
