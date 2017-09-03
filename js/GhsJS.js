@@ -576,7 +576,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                         // console.log($scope.fbData);
 
                         FB.api(
-                            "/" + $scope.fbData.userID + "?fields=email,birthday,first_name,last_name,gender,website",
+                            "/" + $scope.fbData.userID + "?fields=email,birthday,first_name,last_name,gender",
                             function (response) {
                                 if (response && !response.error) {
 
