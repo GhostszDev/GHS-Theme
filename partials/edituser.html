@@ -57,7 +57,7 @@
                     <img style="margin: 10px 0;" ng-src="{{user.user_icon_big}}" alt="" />
                 </div>
 
-                <input type="file" file-input="files" accept="image/*"/>
+                <input type="file" id="file" ng-model="blobImg" onchange="{{add()}}" accept="image/*"/>
             </div>
 
         </div>
@@ -76,7 +76,7 @@
                 fill: ['#07bf29'],
                 height: ['40px'],
                 width: ['94px']
-            })
+            });
 
             $('.bar2').peity('bar', {
                 fill: ['#404040'],
