@@ -534,7 +534,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
         };
 
-        $scope.uploadImg = function(){
+        $scope.uploadImg = function() {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/updateImg",
@@ -546,21 +546,25 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     blobImg: files
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
 
                         $scope.current_post = response.data.post;
-
-                    } else {
-                        console.log(response.data.error_message);
                     }
-
-                })
-                .catch(function () {
-
                 });
+        };
 
+        $scope.add = function() {
+            var f = document.getElementById('file').files[0],
+                r = new FileReader();
+
+            r.onloadend = function(e) {
+                var data = e.target.result;
+                $scope.blobImg = e.target.result;
+            };
+
+            $scope.uploadImg(r.readAsBinaryString(f));
         };
 
         //Facebook login
