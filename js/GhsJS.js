@@ -207,7 +207,9 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         //signup function
         $scope.signup = function (user) {
 
-            user.birthday = user.year + '-' + user.month + '-' + user.date;
+            if(user.birthday == null || !user.birthday) {
+                user.birthday = user.year + '-' + user.month + '-' + user.date;
+            }
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/signup",
@@ -224,11 +226,15 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     mailing: user.mailing,
                     gender: user.gender,
                     birthday: user.birthday,
-                    FBaccess: user.FBaccess
+                    FBAccess: user.FBAccess,
+                    GAccess: user.GAccess,
+                    FBID: user.FBID,
+                    GID: user.GID
                 })
             })
                 .then(function(response) {
 
+                    $(window).attr('location', $scope.domain);
                     // $(window).attr('location', $scope.domain);
 
                 })
@@ -571,12 +577,12 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
                         // handle the response
                         // console.log(response.authResponse);
-                        $scope.fbData.userID = response.authResponse.userID;
+                        $scope.fbData.FBID = response.authResponse.userID;
                         $scope.fbData.FBaccess = response.authResponse.accessToken;
                         // console.log($scope.fbData);
 
                         FB.api(
-                            "/" + $scope.fbData.userID + "?fields=email,birthday,first_name,last_name,gender",
+                            "/" + $scope.fbData.FBID + "?fields=email,birthday,first_name,last_name,gender",
                             function (response) {
                                 if (response && !response.error) {
 
@@ -585,9 +591,43 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                                     $scope.fbData.last_name = response.last_name;
                                     $scope.fbData.email = response.email;
                                     $scope.fbData.gender = response.gender;
-                                    $scope.fbData.birthday = response.birthday;
+                                    $scope.fbData.birthday = response.birthday.split('/');
+                                    $scope.fbData.birthday = $scope.fbData.birthday[2] + "-" + $scope.fbData.birthday[0] + "-" + $scope.fbData.birthday[1];
+                                    $scope.fbData.user_name = response.last_name + "_" + response.first_name + "_" + Math.floor((Math.random() * 1000000) + 1);
 
-                                    console.log($scope.fbData);
+                                    $http({
+                                        url: $scope.domain + "wp-json/ghs_api/v1/social",
+                                        method: "POST",
+                                        headers: {
+                                            'content-type': 'application/x-www-form-urlencoded'
+                                        },
+                                        data: $httpParamSerializerJQLike({
+                                            user_name: $scope.fbData.user_name,
+                                            first_name: $scope.fbData.first_name,
+                                            last_name: $scope.fbData.last_name,
+                                            email: $scope.fbData.email,
+                                            password: $scope.fbData.password,
+                                            mailing: $scope.fbData.mailing,
+                                            gender: $scope.fbData.gender,
+                                            birthday: $scope.fbData.birthday,
+                                            FBAccess: $scope.fbData.FBAccess,
+                                            GAccess: $scope.fbData.GAccess,
+                                            FBID: $scope.fbData.FBID,
+                                            GID: $scope.fbData.GID
+                                        })
+                                    })
+                                        .then(function(response) {
+
+                                            if(response.data.success){
+
+                                                $(window).attr('location', $scope.domain);
+
+                                            }
+
+                                        })
+                                        .catch(function () {
+
+                                        });
 
                                 } else {
 
