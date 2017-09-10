@@ -659,6 +659,11 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             });
         };
 
+        //Google Login
+        $scope.gLogin = function () {
+
+        };
+
         //returns string into json format
         $scope.jsonReturn = function(data) {
 
