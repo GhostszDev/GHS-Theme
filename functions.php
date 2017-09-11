@@ -27,7 +27,8 @@ function ghs_scrs() {
     wp_enqueue_script('moment', get_stylesheet_directory_uri() . '/js/moment.js');
     wp_enqueue_script('date', get_stylesheet_directory_uri() . '/js/bootstrap-datetimepicker.min.js');
     wp_enqueue_script('app', get_stylesheet_directory_uri() . '/js/app.js');
-    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'app', 'BSJS', 'UIBS', 'moment', 'date'), true);
+    wp_enqueue_script('gapi', 'https://apis.google.com/js/platform.js?onload=renderButton');
+    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'app', 'BSJS', 'UIBS', 'moment', 'date', 'gapi'), true);
 
     //localization of scripts
     wp_localize_script('GhsJS', 'myLocalized', array('partials' => trailingslashit( get_template_directory_uri() ) . 'partials/'));
@@ -53,16 +54,15 @@ function ghs_head(){
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-signin-client_id" content="979177383237-vevih7vk4k8niblajr70uu1qfbesapt0.apps.googleusercontent.com">
     <link rel="shortcut icon" type="image/x-icon" href="https://ghostszmusic.com/wp-content/uploads/2016/03/favicon.ico" />
     <base href="<?php echo site_url('/'); ?>">
+
     <script>
         var site = "<?php echo site_url('/'); ?>";
         var post_id = '';
     </script>
 
-    <?php if(is_page('login')){ ?>
-        <meta name="google-signin-client_id" content="979177383237-je61denbtu2te7ilni37cj1sdcfqt67n.apps.googleusercontent.com">
-    <?php } ?>
 
 <?php
 }

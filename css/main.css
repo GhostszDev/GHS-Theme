@@ -7304,13 +7304,19 @@ blockquote span a {
 }
 .account-option > li a.facebook {
     background: none repeat scroll 0 0 #44619d;
-    padding-left: 18px;
-    padding-right: 40px;
+    padding-left: 34px;
+    padding-right: 25px;
 }
 .account-option > li a.twitter {
     background:#00acee;
-    padding-right: 18px;
-    padding-left: 40px;
+    padding-left: 34px;
+    padding-right: 25px;
+}
+
+.account-option > li a.google {
+    background:#D84B37;
+    padding-left: 34px;
+    padding-right: 25px;
 }
 
 .account-option:before {

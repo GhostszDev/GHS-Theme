@@ -110,13 +110,12 @@ header.side-header.slide-menu {
 }
 
 
-
 }
 
 @media (max-width: 767px) {
-.admin-name-hello {
-    display: none;
-}
+/*.admin-name-hello {*/
+    /*display: none;*/
+/*}*/
 blockquote {
     padding: 40px 30px;
 }

@@ -84,6 +84,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $scope.blobImg = "";
         $scope.files = "";
         $scope.fbData = {};
+        $scope.gData = {};
 
         //get safe html back
         $scope.safe = function(x) {
@@ -201,6 +202,21 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
                 }
             });
+
+            gapi.load('auth2', function() {
+                auth2 = gapi.auth2.init({
+                    client_id: '979177383237-vevih7vk4k8niblajr70uu1qfbesapt0.apps.googleusercontent.com',
+                    fetch_basic_profile: true,
+                    scope: 'profile'
+                });
+
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                });
+
+            });
+
+            // $(window).attr('location', $scope.domain);
 
         };
 
@@ -611,7 +627,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                                             last_name: $scope.fbData.last_name,
                                             email: $scope.fbData.email,
                                             password: $scope.fbData.password,
-                                            mailing: $scope.fbData.mailing,
+                                            mailing: true,
                                             gender: $scope.fbData.gender,
                                             birthday: $scope.fbData.birthday,
                                             FBAccess: $scope.fbData.FBAccess,
@@ -659,8 +675,63 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             });
         };
 
-        //Google Login
-        $scope.gLogin = function () {
+        //Google login
+        $scope.gLogin = function(){
+
+            gapi.load('auth2', function() {
+                auth2 = gapi.auth2.init({
+                    client_id: '979177383237-vevih7vk4k8niblajr70uu1qfbesapt0.apps.googleusercontent.com',
+                    fetch_basic_profile: true,
+                    scope: 'profile'
+                });
+
+                // Sign the user in, and then retrieve their ID.
+                auth2.signIn().then(function() {
+                    $scope.gData.GID = auth2.currentUser.get().getId();
+                    $scope.gData.first_name = auth2.currentUser.get().getBasicProfile().getGivenName();
+                    $scope.gData.last_name = auth2.currentUser.get().getBasicProfile().getFamilyName();
+                    $scope.gData.email = auth2.currentUser.get().getBasicProfile().getEmail();
+                    $scope.gData.user_name = $scope.gData.last_name + "_" + $scope.gData.first_name + "_" + Math.floor((Math.random() * 1000000) + 1);
+
+                    // console.log(auth2.currentUser.get().getBasicProfile());
+
+                    // console.log($scope.gData);
+
+                    $http({
+                        url: $scope.domain + "wp-json/ghs_api/v1/social",
+                        method: "POST",
+                        headers: {
+                            'content-type': 'application/x-www-form-urlencoded'
+                        },
+                        data: $httpParamSerializerJQLike({
+                            user_name: $scope.gData.user_name,
+                            first_name: $scope.gData.first_name,
+                            last_name: $scope.gData.last_name,
+                            email: $scope.gData.email,
+                            password: $scope.gData.password,
+                            mailing: true,
+                            gender: $scope.gData.gender,
+                            birthday: $scope.gData.birthday,
+                            FBAccess: $scope.gData.FBAccess,
+                            GAccess: $scope.gData.GAccess,
+                            GID: $scope.gData.GID
+                        })
+                    })
+                        .then(function(response) {
+
+                            if(response.data.success){
+
+                                $(window).attr('location', $scope.domain);
+
+                            }
+
+                        })
+                        .catch(function () {
+
+                        });
+
+                });
+            });
 
         };
 
@@ -771,4 +842,5 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         }(document, 'script', 'facebook-jssdk'));
 
     }
+
 );
