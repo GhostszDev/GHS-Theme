@@ -6,6 +6,11 @@
 </head>
 <body>
 
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJVJMX7"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 <!--<section data-ng-include="'templates/panel.html'"></section>-->
 
 <div class="slide-panel" id="panel-scroll">
