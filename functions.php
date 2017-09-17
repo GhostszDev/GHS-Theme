@@ -94,7 +94,6 @@ function ghs_theme_support(){
 
 }
 
-/* redirect users to front page after login */
 function redirect_to_front_page() {
 
     global $redirect_to;
@@ -114,7 +113,6 @@ function go_home(){
 add_action('wp_head', 'ghs_head');
 add_action('after_setup_theme', 'ghs_theme_support');
 add_action( 'wp_enqueue_scripts', 'ghs_scrs' );
-//add_action('loop_start', 'blockusers_init');
 add_action('login_form', 'redirect_to_front_page');
 add_action('wp_logout','go_home');
 

@@ -15,3 +15,7 @@ Text Domain: ghostszmusic
 .ghs-purple{
     background-color: #8777ff !important;
 }
+
+.update-nag{
+    display: none;
+}
