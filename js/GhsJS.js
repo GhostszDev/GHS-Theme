@@ -1,49 +1,15 @@
 angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
-    .directive('fileInput', function ($parse, $http, $httpParamSerializerJQLike) {
-        return{
-            link:function ($scope, element, attrs) {
-                element.on("change", function (event) {
-                    var files = event.target.files;
-                    var reader = new FileReader();
+    .directive("filesInput", function() {
+        return {
+            require: "ngModel",
+            link: function postLink(scope,elem,attrs,ngModel) {
+                elem.on("change", function(e) {
+                    var files = elem[0].files;
+                    var r = new FileReader();
+                    var ng = ngModel.$setViewValue(files);
 
-                    reader.onloadend = function () {
-
-                        console.log('Result', reader.result);
-
-                        // $http({
-                        //     url: $scope.domain + "wp-json/ghs_api/v1/uploadMedia",
-                        //     method: "POST",
-                        //     headers: {
-                        //         'content-type': 'application/x-www-form-urlencoded'
-                        //     },
-                        //     data: $httpParamSerializerJQLike({
-                        //         content: reader.result,
-                        //         userID: user_id,
-                        //         type: reader.type,
-                        //         mediaType: files[0].typeName
-                        //     })
-                        // })
-                        //     .then(function(response) {
-                        //
-                        //         if (response.data.success) {
-                        //
-                        //             console.log(response.data);
-                        //
-                        //         } else {
-                        //             console.log(response.data);
-                        //         }
-                        //
-                        //     })
-                        //     .catch(function () {
-                        //
-                        //     });
-                    };
-
-                    reader.readAsDataURL(files[0]);
-
-                    $parse(attrs.fileInput).assign(element[0].files);
-                    $scope.$apply();
-                });
+                    console.log(r.readAsBinaryString(ng));
+                })
             }
         }
     })
@@ -436,9 +402,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //get friends list
-        $scope.friendsList = function(user){
-
-            console.log($scope.user);
+        $scope.friendsList = function(userID){
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/friendsList",
@@ -447,7 +411,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     'content-type': 'application/x-www-form-urlencoded'
                 },
                 data: $httpParamSerializerJQLike({
-                    userID: 1
+                    userID: userID
                 })
             })
                 .then(function(response) {
@@ -466,7 +430,10 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //get users feed
-        $scope.userFeed = function(user){
+        $scope.userFeed = function(){
+
+            $scope.user = user;
+            console.log($scope.user);
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/userFeed",
@@ -475,15 +442,29 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     'content-type': 'application/x-www-form-urlencoded'
                 },
                 data: $httpParamSerializerJQLike({
-                    userID: user.ID
+                    userName: $scope.user
                 })
             })
                 .then(function(response) {
 
                     if (response.data.success) {
+
                         $scope.feed = response.data.feed;
+
                     } else {
-                        console.log(response.data.error_message);
+
+                        console.error(response.data.error_message);
+                    }
+
+                    if(!response.data.user){
+
+                        $(window).attr('location', $scope.domain);
+
+                    } else {
+
+                        $scope.userProfile = response.data.user;
+                        $scope.friendsList($scope.userProfile.ID);
+
                     }
 
                 })
@@ -550,6 +531,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
         };
 
+        //upload img to database
         $scope.uploadImg = function() {
 
             $http({
@@ -571,16 +553,27 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 });
         };
 
-        $scope.add = function() {
-            var f = document.getElementById('file').files[0],
-                r = new FileReader();
+        //grab img blob
+        $scope.add = function(selectimage) {
+
+            var r = new FileReader();
 
             r.onloadend = function(e) {
                 var data = e.target.result;
-                $scope.blobImg = e.target.result;
+                $scope.$apply(function() {
+                    $scope.f = data;
+                });
             };
 
-            $scope.uploadImg(r.readAsBinaryString(f));
+            $scope.$apply(function () {
+
+                $scope.blobImg = selectimage.files[0];
+
+            });
+
+            console.log(r.readAsArrayBuffer($scope.blobImg));
+
+            // $scope.uploadImg(r.readAsBinaryString(f));
         };
 
         //Facebook login
@@ -841,6 +834,4 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-    }
-
-);
+    });

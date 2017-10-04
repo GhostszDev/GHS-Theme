@@ -52,13 +52,13 @@ function ghs_head(){
             enable_page_level_ads: true
         });
 
-        <!-- Google Tag Manager -->
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-MJVJMX7');
-    <!-- End Google Tag Manager -->
+//        <!-- Google Tag Manager -->
+//        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+//            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+//            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+//            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+//        })(window,document,'script','dataLayer','GTM-MJVJMX7');
+//    <!-- End Google Tag Manager -->
 
     </script>
     <meta charset="utf-8">
@@ -67,9 +67,16 @@ function ghs_head(){
     <link rel="shortcut icon" type="image/x-icon" href="https://ghostszmusic.com/wp-content/uploads/2016/03/favicon.ico" />
     <base href="<?php echo site_url('/'); ?>">
 
+    <?php
+    global $wp_query;
+    $user = $wp_query->query_vars['user'];
+    ?>
+
     <script>
         var site = "<?php echo site_url('/'); ?>";
         var post_id = '';
+        var user = "<?php echo $user?>";
+//        console.log("This is user: " + user);
     </script>
 
 
@@ -90,6 +97,7 @@ function ghs_theme_support(){
         'audio'
     ));
 
+    add_theme_support( 'woocommerce' );
     add_theme_support('post-thumbnails');
 
 }
@@ -109,12 +117,26 @@ function go_home(){
 
 }
 
+function user_page_temp(){
+
+    add_rewrite_rule('^user-profile/([^/]*)/?','index.php?page_id=372&user=$matches[1]','top');
+
+}
+
+function user_page_tags(){
+
+    add_rewrite_tag('%user%', '([^&]+)');
+
+}
+
 //adding actions
 add_action('wp_head', 'ghs_head');
 add_action('after_setup_theme', 'ghs_theme_support');
 add_action( 'wp_enqueue_scripts', 'ghs_scrs' );
 add_action('login_form', 'redirect_to_front_page');
 add_action('wp_logout','go_home');
+add_action('init', 'user_page_temp', 10, 0);
+add_action('init', 'user_page_tags', 10, 0);
 
 //adding filters
 add_filter('show_admin_bar', '__return_false');

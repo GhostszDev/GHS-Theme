@@ -43,10 +43,10 @@
                 <div class="profile-sec">
                     <div class="profile-head" ng-style="{'background-image':'url('+user.backgroundImg+')'}">
                         <div class="profile-avatar">
-                            <span><img ng-src="{{user.user_icon_100}}" alt="" /></span>
+                            <span><img ng-src="{{userProfile.user_icon_100}}" alt="" /></span>
                             <div class="profile-name">
-                                <h3 ng-hide="user.name.length < 1">{{user.userName}}</h3>
-                                <h3 ng-show="user.name.length > 1">{{user.name}}</h3>
+                                <h3 ng-hide="user.name.length < 1">{{userProfile.userName}}</h3>
+                                <h3 ng-show="user.name.length > 1">{{userProfile.name}}</h3>
                                 <!--<i>Creative Graphic Designer</i>-->
                                 <ul class="social-btns">
                                     <li><a title="" href="#"><i class="ti-facebook"></i></a></li>
@@ -62,7 +62,7 @@
                         </ul>
                         <ul class="profile-connect">
                             <li><a href="/edit-user" title="">Edit User</a></li>
-                            <!--<li><a href="#" title="">Add as Friend</a></li>-->
+                            <li ng-show="user.ID != userProfile.ID"><a href="#" title="">Add as Friend</a></li>
                         </ul>
                     </div>
                     <div class="row">
@@ -126,21 +126,16 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="widget white with-padding" ng-init="friendsList(user);">
+                            <div class="widget white with-padding">
                                 <div class="widget-title no-padding no-margin">
                                     <h3>Friends List</h3>
                                 </div>
                                 <div class="friend-list">
                                     <ul id="frnd-list">
                                         <li ng-repeat="f in friends">
-                                            <img ng-src="{{f.user_icon}}" alt="" />
-                                            <h3>{{f.userName}}<i>{{f.role}}</i></h3>
+                                            <a ng-href="{{domain + f.link}}"><img ng-src="{{f.user_icon}}" alt="" /></a>
+                                            <h3><a ng-href="{{domain + f.link}}">{{f.userName}}</a><i>{{f.role}}</i></h3>
                                             <span class="{{f.status}}">{{f.status}}</span>
-                                        </li>
-                                        <li>
-                                            <img src="http://placehold.it/40x40" alt="" />
-                                            <h3>Kailey Paul<i>Director</i></h3>
-                                            <span class="offline">Offline</span>
                                         </li>
                                     </ul>
                                 </div>

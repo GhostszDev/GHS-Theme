@@ -40,28 +40,17 @@
 
     <div class="main-content-area">
 
-        <br/>
-        <br/>
 
-        <div class="col-md-12">
-
-            <div class="progress w-tooltip">
-                <div style="width: 70%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar" class="purple progress-bar">
-                    <span><i>Profile Completion</i>70%</span>
-                </div>
-            </div>
-
-            <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
 
                 <div class="admin-image">
-                    <img style="margin: 10px 0;" ng-src="{{user.user_icon_big}}" alt="" />
+                    <img ng-src="{{user.user_icon_big}}" alt="" /> <br/>
+                    <input id="profileImg" type="file" onchange="angular.element(document.getElementById('profileImg')).scope().add(document.getElementById('profileImg'))" accept="image/*">
                 </div>
 
-                <input type="file" id="file" ng-model="blobImg" onchange="{{add()}}" accept="image/*"/>
             </div>
-
         </div>
-
     </div>
 </div><!-- Panel Content -->
 <script type="text/javascript">
