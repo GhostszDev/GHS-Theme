@@ -6,6 +6,19 @@
  * Time: 5:47 PM
  */
 
+//adding actions
+add_action('wp_head', 'ghs_head');
+add_action('after_setup_theme', 'ghs_theme_support');
+add_action( 'wp_enqueue_scripts', 'ghs_scrs' );
+//add_action('login_form', 'redirect_to_front_page');
+add_action('wp_logout','go_home');
+add_action('init', 'user_page_temp', 10, 0);
+add_action('init', 'user_page_tags', 10, 0);
+
+//adding filters
+add_filter('show_admin_bar', '__return_false');
+add_filter('comment_flood_filter', '__return_false');
+
 function ghs_scrs() {
 
     //styles
@@ -40,7 +53,7 @@ function ghs_head(){
     <title><?php
 
         if(is_home()){
-            echo ucfirst(get_bloginfo( 'name' ));
+            echo ucwords(get_bloginfo( 'name' ));
         } else {
             echo ucwords(wp_title( ' | ', false, right ) . get_bloginfo( 'name' ));
         }
@@ -128,16 +141,3 @@ function user_page_tags(){
     add_rewrite_tag('%user%', '([^&]+)');
 
 }
-
-//adding actions
-add_action('wp_head', 'ghs_head');
-add_action('after_setup_theme', 'ghs_theme_support');
-add_action( 'wp_enqueue_scripts', 'ghs_scrs' );
-add_action('login_form', 'redirect_to_front_page');
-add_action('wp_logout','go_home');
-add_action('init', 'user_page_temp', 10, 0);
-add_action('init', 'user_page_tags', 10, 0);
-
-//adding filters
-add_filter('show_admin_bar', '__return_false');
-add_filter('comment_flood_filter', '__return_false');
