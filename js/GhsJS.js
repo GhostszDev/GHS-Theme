@@ -52,6 +52,54 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $scope.fbData = {};
         $scope.gData = {};
 
+        //oauth test
+        $scope.oauth = function () {
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/ghs_oauth",
+                method: "GET",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                })
+            })
+                .then(function(response) {
+                    $scope.user.token = response.data.result.access_token;
+
+                })
+                .catch(function () {
+
+                })
+
+        };
+
+        //token functions
+        $scope.getTokenUser = function () {
+
+            console.log($scope.user.token);
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/getTokenUserData",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    token: $scope.user.token
+                })
+            })
+                .then(function(response) {
+
+
+
+                })
+                .catch(function () {
+
+                })
+
+        };
+
         //get safe html back
         $scope.safe = function(x) {
             return $sce.trustAsHtml(x);
@@ -74,6 +122,9 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
                     if (response.data.success) {
                         $scope.user = response.data.user;
+                        if($scope.user.token != null || $scope.user.token == ''){
+                            $scope.oauth();
+                        }
                     } else {
                         console.log(response.data.error_message);
                     }
@@ -149,7 +200,6 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 .then(function(response) {
 
                     $(window).attr('location', $scope.domain);
-                    // console.log('success: ' + response.data.success);
 
                 })
                 .catch(function () {
@@ -157,6 +207,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 });
         };
 
+        //logout function
         $scope.logout = function(){
 
             FB.getLoginStatus(function(response) {
