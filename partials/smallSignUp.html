@@ -1,0 +1,47 @@
+<div class="related-post">
+    <div class="blog-sec">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="heading3">
+                    <h3>Login/Sign Up to Leave a Comment</h3>
+                    <span></span>
+                </div>
+                <div class="account-sec">
+                    <div class="logo" style="padding-left: 121px;">
+                        <a href="/" title="">
+                            <i>
+                                <img src="https://ghostszmusic.com/wp-content/uploads/2016/02/cropped-logo-e1484926667618.png" style="width: 35px;">
+                            </i>
+                            <span>GhostszMusic</span>
+                            <p>Games, Music & More</p>
+                        </a>
+                    </div>
+
+                    <form class="account-form">
+                        <ul class="account-option">
+                            <li><a title="" class="google" ng-click="gLogin()"><i class="ti-google"></i> Sign in via <strong>google</strong></a></li>
+                            <li><a title="" class="facebook" ng-click="fbLogin()"><i class="ti-facebook"></i> Sign in via <strong>facebook</strong></a></li>
+                        </ul>
+                        <fieldset>
+                            <i class="ti-user"></i>
+                            <input type="text" placeholder="Username" ng-model="user.name"/>
+                        </fieldset>
+                        <fieldset>
+                            <i class="ti-key"></i>
+                            <input type="password" placeholder="Password" ng-model="user.password"/>
+                        </fieldset>
+                        <label><input type="checkbox" ng-model="user.remember"/>Remember me</label>
+                        <input type="submit" ng-click="login(user)" value="submit" class="red" />
+                    </form>
+                    <ul class="account-feature">
+                        <li><a href="#" title="">Forgot your password?</a></li>
+                        <li><a href="/sign-up" title="">Create a new account</a></li>
+                        <!--<li><button style="color: black;" ng-click="oauth()">Testing OAuth</button></li>-->
+                        <!--<li><button style="color: black;" ng-click="getTokenUser()">Testing OAuth</button></li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- comment section -->
+

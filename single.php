@@ -120,9 +120,14 @@
 
             <div ng-include="'/wp-content/themes/GHS-Theme/partials/related.html'">
             </div>
-            
+
+            <?php if(is_user_logged_in()){ ?>
             <div ng-include="'/wp-content/themes/GHS-Theme/partials/comments.html'">
             </div>
+            <?php } else { ?>
+            <div ng-include="'/wp-content/themes/GHS-Theme/partials/smallSignUp.html'">
+            </div>
+            <?php } ?>
         </div>
     </div><!-- Panel Content -->
     <script type="text/javascript">
