@@ -45,10 +45,12 @@
                     <div class="col-md-6">
                         <div class="blog">
                             <div class="blog-thumb">
-                                <a href="{{p.url}}" title="{{p.title}}"><img ng-src="{{p.thumb}}" alt="" /></a>
+                                <a href="{{p.url}}" title="{{p.title}}"><img ng-src="{{p.thumb}}" alt=""/></a>
                             </div>
                             <div class="blog-info" style="clear: both;">
-                                <i class="fa fa-calendar" aria-hidden="true"></i> {{p.date}} | <i class="fa fa-comment" aria-hidden="true"></i> {{p.comment_count}}
+                                <i class="fa fa-calendar" aria-hidden="true"></i> {{p.date}} | <i class="fa fa-comment"
+                                                                                                  aria-hidden="true"></i>
+                                {{p.comment_count}}
                                 <h2><a href="{{p.url}}" title="{{p.title}}">{{p.title}}</a></h2>
                                 <p ng-bind-html="trustAsHtml(p.short_ver)"></p>
                             </div>
@@ -70,12 +72,12 @@
     </div>
 </div><!-- Panel Content -->
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         'use strict';
 
         //*** Piety Mini Charts ***//
-        $(function() {
+        $(function () {
 
             $('.bar').peity('bar', {
                 fill: ['#07bf29'],

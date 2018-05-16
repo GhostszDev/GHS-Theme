@@ -59,18 +59,23 @@
                                     <div class="col-md-12"><h2>Want to tell us something?</h2></div>
                                     <div class="col-md-6">
                                         <i class="fa fa-user"></i>
-                                        <input  name="name" type="text" id="name" placeholder="Name" ng-model="contact.name">
+                                        <input name="name" type="text" id="name" placeholder="Name"
+                                               ng-model="contact.name">
                                     </div>
                                     <div class="col-md-6">
                                         <i class="fa fa-at"></i>
-                                        <input name="email" type="text" id="email" placeholder="Email" ng-model="contact.email">
+                                        <input name="email" type="text" id="email" placeholder="Email"
+                                               ng-model="contact.email">
                                     </div>
                                     <div class="col-md-12">
                                         <i class="fa fa-pencil"></i>
-                                        <textarea name="comments" id="comments" placeholder="Tell us about it..." ng-model="contact.msg"></textarea>
+                                        <textarea name="comments" id="comments" placeholder="Tell us about it..."
+                                                  ng-model="contact.msg"></textarea>
                                     </div>
                                     <div class="col-md-12">
-                                        <button type="submit" class="submit theme-btn ghs-purple" id="submit" ng-click="contactUs(contact)">SEND NOW</button>
+                                        <button type="submit" class="submit theme-btn ghs-purple" id="submit"
+                                                ng-click="contactUs(contact)">SEND NOW
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -83,21 +88,21 @@
     </div>
 </div><!-- Panel Content -->
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         'use strict';
 
 
         /*================== Location Map Hide/Show =====================*/
-        $('.view-location').on('click', function(){
+        $('.view-location').on('click', function () {
             $('.google-map').addClass('active');
         });
-        $('.hide-location').on('click', function(){
+        $('.hide-location').on('click', function () {
             $('.google-map').removeClass('active');
         });
 
         //*** Piety Mini Charts ***//
-        $(function() {
+        $(function () {
 
             $('.bar').peity('bar', {
                 fill: ['#07bf29'],

@@ -1,19 +1,5 @@
 angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
-    .directive("filesInput", function() {
-        return {
-            require: "ngModel",
-            link: function postLink(scope,elem,attrs,ngModel) {
-                elem.on("change", function(e) {
-                    var files = elem[0].files;
-                    var r = new FileReader();
-                    var ng = ngModel.$setViewValue(files);
-
-                    console.log(r.readAsBinaryString(ng));
-                })
-            }
-        }
-    })
-    .controller('GHS_ctrl', function($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce, $window) {
+    .controller('GHS_ctrl', function ($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce, $window) {
 
         //params
         $scope.openMenu = false;
@@ -29,7 +15,15 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $scope.gameList = [];
         $scope.notifications = [];
         $scope.employee = [
-            {name: 'Steven "Ghost" Rivera', position: 'Founder/Owner', desc: 'I want to inspire the massive by creating the greatest games I possibly can.', img: 'https://pbs.twimg.com/profile_images/834395726469877766/spmuKxO_.jpg', fb_link: 'https://www.facebook.com/GhostszLife', t_link: 'https://twitter.com/HoodieDork', yt_link: 'https://www.youtube.com/user/ghostszmusic?sub_confirmation=1'}
+            {
+                name: 'Steven "Ghost" Rivera',
+                position: 'Founder/Owner',
+                desc: 'I want to inspire the massive by creating the greatest games I possibly can.',
+                img: 'https://pbs.twimg.com/profile_images/834395726469877766/spmuKxO_.jpg',
+                fb_link: 'https://www.facebook.com/GhostszLife',
+                t_link: 'https://twitter.com/HoodieDork',
+                yt_link: 'https://www.youtube.com/user/ghostszmusic?sub_confirmation=1'
+            }
         ];
         $scope.def_post = {
             post_num: 6,
@@ -48,6 +42,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $scope.feed = [];
         $scope.com = "";
         $scope.blobImg = "";
+        $scope.userEdit = false;
         $scope.files = "";
         $scope.fbData = {};
         $scope.gData = {};
@@ -61,10 +56,9 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded'
                 },
-                data: $httpParamSerializerJQLike({
-                })
+                data: $httpParamSerializerJQLike({})
             })
-                .then(function(response) {
+                .then(function (response) {
                     $scope.user.token = response.data.result.access_token;
 
                 })
@@ -89,8 +83,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     token: $scope.user.token
                 })
             })
-                .then(function(response) {
-
+                .then(function (response) {
 
 
                 })
@@ -101,12 +94,12 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //get safe html back
-        $scope.safe = function(x) {
+        $scope.safe = function (x) {
             return $sce.trustAsHtml(x);
         };
 
         //get userData
-        $scope.getUser = function(){
+        $scope.getUser = function () {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/getuserdata",
@@ -118,11 +111,18 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     user_ID: user_id
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
                         $scope.user = response.data.user;
-                        if($scope.user.token != null || $scope.user.token == ''){
+
+                        if(response.data.user.useBlob){
+                            $scope.user.user_icon = window.atob(response.data.user.user_icon);
+                            $scope.user.user_icon_big = window.atob(response.data.user.user_icon_big);
+                            $scope.user.user_icon_100 = window.atob(response.data.user.user_icon_100);
+                        }
+
+                        if ($scope.user.token != null || $scope.user.token == '') {
                             $scope.oauth();
                         }
                     } else {
@@ -137,7 +137,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //get some post
-        $scope.get_post = function(post, offset){
+        $scope.get_post = function (post, offset) {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/ghs_post",
@@ -153,11 +153,11 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
 
-                        angular.forEach(response.data.post, function(value, key){
+                        angular.forEach(response.data.post, function (value, key) {
 
                             response.data.post.date = new Date(value.date);
 
@@ -180,7 +180,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         //login function
         $scope.login = function (user) {
 
-            if(angular.isUndefined(user.remember)){
+            if (angular.isUndefined(user.remember)) {
                 user.remember = false;
             }
 
@@ -197,7 +197,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     remember: user.remember
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     $(window).attr('location', $scope.domain);
 
@@ -208,19 +208,19 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //logout function
-        $scope.logout = function(){
+        $scope.logout = function () {
 
-            FB.getLoginStatus(function(response) {
+            FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
 
-                    FB.logout(function(response) {
+                    FB.logout(function (response) {
                         // Person is now logged out
                     });
 
                 }
             });
 
-            gapi.load('auth2', function() {
+            gapi.load('auth2', function () {
                 auth2 = gapi.auth2.init({
                     client_id: '979177383237-vevih7vk4k8niblajr70uu1qfbesapt0.apps.googleusercontent.com',
                     fetch_basic_profile: true,
@@ -240,7 +240,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         //signup function
         $scope.signup = function (user) {
 
-            if(user.birthday == null || !user.birthday) {
+            if (user.birthday == null || !user.birthday) {
                 user.birthday = user.year + '-' + user.month + '-' + user.date;
             }
 
@@ -265,7 +265,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     GID: user.GID
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     $(window).attr('location', $scope.domain);
                     // $(window).attr('location', $scope.domain);
@@ -277,7 +277,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //gets single post
-        $scope.getSinglePost = function(postID){
+        $scope.getSinglePost = function (postID) {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/singlePost",
@@ -289,7 +289,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     postID: postID
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
 
@@ -307,7 +307,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //get comment list
-        $scope.getCommentList = function(){
+        $scope.getCommentList = function () {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/getComments",
@@ -319,7 +319,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     postID: $rootScope.post_id
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
                         $scope.comments = response.data.comment;
@@ -335,7 +335,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //post comment
-        $scope.postComment = function(user, type, comment, orginialUser){
+        $scope.postComment = function (user, type, comment, orginialUser) {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/post_comment",
@@ -352,7 +352,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     user_id: user.ID
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
                         $scope.user_stats = response.data.user_info.data;
@@ -365,14 +365,14 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 .catch(function () {
 
                 })
-                .finally(function(){
+                .finally(function () {
                     $scope.getCommentList();
                 });
 
         };
 
         //carousel items
-        $scope.carouselItems = function(){
+        $scope.carouselItems = function () {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/carouselItems",
@@ -381,7 +381,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     'content-type': 'application/x-www-form-urlencoded'
                 }
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
                         $scope.listbox = response.data.post;
@@ -397,7 +397,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //contact us form
-        $scope.contactUs = function(contact){
+        $scope.contactUs = function (contact) {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/contactUs",
@@ -411,7 +411,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     msg: contact.msg
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
                         $scope.contact = [];
@@ -428,7 +428,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //grabbing the game list
-        $scope.grabGamesList = function(){
+        $scope.grabGamesList = function () {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/grabGameList",
@@ -437,7 +437,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     'content-type': 'application/x-www-form-urlencoded'
                 }
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
                         $scope.gameList = response.data.gameList;
@@ -453,7 +453,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //get friends list
-        $scope.friendsList = function(userID){
+        $scope.friendsList = function (userID) {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/friendsList",
@@ -465,7 +465,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     userID: userID
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
                         $scope.friends = response.data.friend;
@@ -481,7 +481,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //get users feed
-        $scope.userFeed = function(){
+        $scope.userFeed = function () {
 
             $scope.user = user;
             console.log($scope.user);
@@ -496,7 +496,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     userName: $scope.user
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
 
@@ -507,7 +507,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                         console.error(response.data.error_message);
                     }
 
-                    if(!response.data.user){
+                    if (!response.data.user) {
 
                         $(window).attr('location', $scope.domain);
 
@@ -526,7 +526,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //user feed comments
-        $scope.userFeedCom = function(com, par){
+        $scope.userFeedCom = function (com, par) {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/userUpdate",
@@ -540,7 +540,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     comment_parent: par
                 })
             })
-                .then(function(response) {
+                .then(function (response) {
 
                     if (response.data.success) {
                         $scope.com = "";
@@ -553,7 +553,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 .catch(function () {
 
                 })
-                .finally(function(){
+                .finally(function () {
 
                     $scope.userFeed($scope.user.ID);
 
@@ -573,7 +573,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         //prev page for blog pagination
         $scope.prevpage = function () {
 
-            if($scope.offset > 0) {
+            if ($scope.offset > 0) {
 
                 $scope.offset -= 6;
                 $scope.get_post($scope.def_post, $scope.offset);
@@ -583,7 +583,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //upload img to database
-        $scope.uploadImg = function() {
+        $scope.uploadImg = function () {
 
             $http({
                 url: $scope.domain + "wp-json/ghs_api/v1/updateImg",
@@ -592,44 +592,27 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                     'content-type': 'application/x-www-form-urlencoded'
                 },
                 data: $httpParamSerializerJQLike({
-                    blobImg: files
+                    img: window.btoa($scope.blobImg),
+                    user_ID: $scope.user.ID
                 })
             })
                 .then(function (response) {
 
-                    if (response.data.success) {
+                    // console.log(response);
 
-                        $scope.current_post = response.data.post;
-                    }
+                })
+                .catch(function () {
+
+                })
+                .finally(function () {
+                    $scope.getUser();
                 });
-        };
 
-        //grab img blob
-        $scope.add = function(selectimage) {
-
-            var r = new FileReader();
-
-            r.onloadend = function(e) {
-                var data = e.target.result;
-                $scope.$apply(function() {
-                    $scope.f = data;
-                });
-            };
-
-            $scope.$apply(function () {
-
-                $scope.blobImg = selectimage.files[0];
-
-            });
-
-            console.log(r.readAsArrayBuffer($scope.blobImg));
-
-            // $scope.uploadImg(r.readAsBinaryString(f));
         };
 
         //Facebook login
-        $scope.fbLogin = function(){
-            FB.getLoginStatus(function(response) {
+        $scope.fbLogin = function () {
+            FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
 
                     console.log('Logged In');
@@ -637,7 +620,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 }
                 else {
                     // $scope.fbData.user_ID = response.authResponse.userID;
-                    FB.login(function(response) {
+                    FB.login(function (response) {
 
                         // handle the response
                         // console.log(response.authResponse);
@@ -680,9 +663,9 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                                             GID: $scope.fbData.GID
                                         })
                                     })
-                                        .then(function(response) {
+                                        .then(function (response) {
 
-                                            if(response.data.success){
+                                            if (response.data.success) {
 
                                                 $(window).attr('location', $scope.domain);
 
@@ -720,9 +703,9 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //Google login
-        $scope.gLogin = function(){
+        $scope.gLogin = function () {
 
-            gapi.load('auth2', function() {
+            gapi.load('auth2', function () {
                 auth2 = gapi.auth2.init({
                     client_id: '979177383237-vevih7vk4k8niblajr70uu1qfbesapt0.apps.googleusercontent.com',
                     fetch_basic_profile: true,
@@ -730,7 +713,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                 });
 
                 // Sign the user in, and then retrieve their ID.
-                auth2.signIn().then(function() {
+                auth2.signIn().then(function () {
                     $scope.gData.GID = auth2.currentUser.get().getId();
                     $scope.gData.first_name = auth2.currentUser.get().getBasicProfile().getGivenName();
                     $scope.gData.last_name = auth2.currentUser.get().getBasicProfile().getFamilyName();
@@ -761,9 +744,9 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                             GID: $scope.gData.GID
                         })
                     })
-                        .then(function(response) {
+                        .then(function (response) {
 
-                            if(response.data.success){
+                            if (response.data.success) {
 
                                 $(window).attr('location', $scope.domain);
 
@@ -780,9 +763,79 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         };
 
         //returns string into json format
-        $scope.jsonReturn = function(data) {
+        $scope.jsonReturn = function (data) {
 
             return JSON.stringify(data);
+
+        };
+
+        $scope.uploadFile = function () {
+            var preview = document.querySelector('#photo-id');
+            var file    = document.querySelector('input[type=file]').files[0];
+            var reader  = new FileReader();
+
+            reader.addEventListener("load", function () {
+                preview.src = reader.result;
+                $scope.blobImg = reader.result;
+                // console.log('BlobImg: ' + window.btoa($scope.blobImg));
+                $scope.uploadImg();
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        };
+
+        $scope.showBlobImg = function(file){
+
+            var preview = document.querySelector('#photo-id');
+            preview.src = file;
+            // console.log(file);
+
+        };
+
+        $scope.editUser = function(){
+
+            $scope.userEdit = true;
+
+        };
+
+        $scope.saveUser = function(user){
+
+            $scope.userEdit = false;
+            user.birthday = user.year + '-' + user.month + '-' + user.date;
+
+            $http({
+                url: $scope.domain + "wp-json/ghs_api/v1/updataUser",
+                method: "POST",
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializerJQLike({
+                    userID: user.ID,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    email: user.email,
+                    mailing: user.mailing,
+                    gender: user.gender,
+                    birthday: user.birthday,
+                    FBAccess: user.FBAccess,
+                    GAccess: user.GAccess,
+                    FBID: user.FBID,
+                    GID: user.GID
+                })
+            })
+                .then(function (response) {
+
+                    console.log(response.data);
+
+                })
+                .catch(function () {
+
+                })
+                .finally(function () {
+                    $scope.getUser();
+                });
 
         };
 
@@ -790,32 +843,35 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
 
         var loaded = 0;
         var imgCounter = $(".main-content img").length;
-        if(imgCounter > 0){
+        if (imgCounter > 0) {
             console.log(imgCounter);
+
             function doProgress() {
-                $(".main-content img").load(function() {
+                $(".main-content img").load(function () {
                     loaded++;
                     var newWidthPercentage = (loaded / imgCounter) * 100;
                     animateLoader(newWidthPercentage + '%');
                 })
             }
+
             function animateLoader(newWidth) {
                 $("#progressBar").width(newWidth);
-                if(imgCounter === loaded){
-                    setTimeout(function(){
-                        $("#progressBar").animate({opacity:0});
-                    },500);
+                if (imgCounter === loaded) {
+                    setTimeout(function () {
+                        $("#progressBar").animate({opacity: 0});
+                    }, 500);
                 }
             }
+
             doProgress();
         }
-        else{
-            setTimeout(function(){
+        else {
+            setTimeout(function () {
                 $("#progressBar").css({
-                    "opacity":0,
-                    "width":"100%"
+                    "opacity": 0,
+                    "width": "100%"
                 });
-            },500);
+            }, 500);
         }
 
         // Activates Tooltips for Social Links
@@ -825,24 +881,24 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $('[data-toggle="popover"]').popover();
 
         //*** Refresh Content ***//
-        $('.refresh-content').on("click", function(){
-            $(this).parent().parent().addClass("loading-wait").delay(3000).queue(function(next){
+        $('.refresh-content').on("click", function () {
+            $(this).parent().parent().addClass("loading-wait").delay(3000).queue(function (next) {
                 $(this).removeClass("loading-wait");
                 next();
             });
-            $(this).addClass("fa-spin").delay(3000).queue(function(next){
+            $(this).addClass("fa-spin").delay(3000).queue(function (next) {
                 $(this).removeClass("fa-spin");
                 next();
             });
         });
 
         //*** Expand Content ***//
-        $('.expand-content').on("click", function(){
+        $('.expand-content').on("click", function () {
             $(this).parent().parent().toggleClass("expand-this");
         });
 
         //*** Delete Content ***//
-        $('.close-content').on("click", function(){
+        $('.close-content').on("click", function () {
             $(this).parent().parent().slideUp();
         });
 
@@ -851,7 +907,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             selector: "a[data-toggle=tooltip]"
         });
 
-        var handle_nav = function(e) {
+        var handle_nav = function (e) {
             e.preventDefault();
             var nav = $(this);
             nav.parents('.carousel').carousel(nav.data('slide'));
@@ -867,20 +923,23 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $('#1').addClass('active');
 
         //FaceBook SDK
-        window.fbAsyncInit = function() {
+        window.fbAsyncInit = function () {
             FB.init({
-                appId            : '220252511670899',
-                autoLogAppEvents : true,
-                xfbml            : true,
-                version          : 'v2.10'
+                appId: '220252511670899',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v2.10'
             });
             FB.AppEvents.logPageView();
         };
 
-        (function(d, s, id){
+        (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));

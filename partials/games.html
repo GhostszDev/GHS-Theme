@@ -43,7 +43,7 @@
                 <div class="col-md-3" ng-repeat="g in gameList">
                     <div class="product-box">
                         <div class="product-thumb">
-                            <img ng-src="{{domain + g.img}}" alt="" />
+                            <img ng-src="{{domain + g.img}}" alt=""/>
                             <a href="{{g.link}}" title="" class="add-to-cart"><i class="fa fa-book"></i></a>
                         </div>
                         <h3><a href="{{g.link}}" title="">{{g.Name}}</a></h3>
@@ -54,12 +54,12 @@
     </div>
 </div><!-- Panel Content -->
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         'use strict';
 
         //*** Piety Mini Charts ***//
-        $(function() {
+        $(function () {
 
             $('.bar').peity('bar', {
                 fill: ['#07bf29'],

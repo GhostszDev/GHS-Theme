@@ -10,7 +10,9 @@
                     <div class="status-upload">
                         <form class="ng-pristine ng-valid">
                             <textarea placeholder="Leave a comment here!" ng-model="comment"></textarea>
-                            <button type="submit" class="ghs-purple" ng-click="postComment(user, 0, comment);"><i class="ti-comment"></i> Submit</button>
+                            <button type="submit" class="ghs-purple" ng-click="postComment(user, 0, comment);"><i
+                                    class="ti-comment"></i> Submit
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -20,7 +22,7 @@
                             <li ng-repeat="com in comments">
                                 <div class="timeline">
                                     <div class="user-timeline">
-                                        <span><img ng-src="{{com.user_img}}" alt="" /></span>
+                                        <span><img ng-src="{{com.user_img}}" alt=""/></span>
                                     </div>
                                     <div class="timeline-detail">
                                         <div class="timeline-head">
@@ -30,10 +32,12 @@
                                             <p>{{com.comment}}</p>
                                             <div data-toggle="buttons" class="btn-group btn-group-sm">
                                                 <label class="btn btn-default">
-                                                    <input type="radio" checked=""  name="options" /><i class="ti-comments"></i> Reply
+                                                    <input type="radio" checked="" name="options"/><i
+                                                        class="ti-comments"></i> Reply
                                                 </label>
                                                 <label class="btn btn-default">
-                                                    <input type="radio"  name="options" /> <i class="ti-thumb-up"></i> Like
+                                                    <input type="radio" name="options"/> <i class="ti-thumb-up"></i>
+                                                    Like
                                                 </label>
                                             </div>
                                             <form class="post-reply">

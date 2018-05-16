@@ -1,13 +1,13 @@
 <!--<div ng-show="!loggedIn" style="color: #000;">-->
-    <!--<input ng-model="user.name" type="text">-->
-    <!--<input ng-model="user.password" type="password">-->
-    <!--<input ng-model="user.remember" type="checkbox">-->
-    <!--<button ng-click="login(user)">Submit</button>-->
+<!--<input ng-model="user.name" type="text">-->
+<!--<input ng-model="user.password" type="password">-->
+<!--<input ng-model="user.remember" type="checkbox">-->
+<!--<button ng-click="login(user)">Submit</button>-->
 <!--</div>-->
 
 <!--<div ng-hide="!loggedIn">-->
 
-    <!--<p>You're signed in!</p>-->
+<!--<p>You're signed in!</p>-->
 
 <!--</div>-->
 
@@ -16,11 +16,11 @@
 </div>
 <div class="panel-content">
     <!--<div class="welcome-patti">-->
-        <!--<span><strong>Hey, Welcome back,</strong> it’s so great to see you again</span>-->
-        <!--<ul class="breadcrumbs">-->
-            <!--<li><a href="#" title=""><i class="fa fa-home"></i></a></li>-->
-            <!--<li><a href="#" title="">Blank</a></li>-->
-        <!--</ul>-->
+    <!--<span><strong>Hey, Welcome back,</strong> it’s so great to see you again</span>-->
+    <!--<ul class="breadcrumbs">-->
+    <!--<li><a href="#" title=""><i class="fa fa-home"></i></a></li>-->
+    <!--<li><a href="#" title="">Blank</a></li>-->
+    <!--</ul>-->
     <!--</div>&lt;!&ndash; Welcome Patti &ndash;&gt;-->
     <div class="heading-sec">
         <div class="row">
@@ -52,51 +52,54 @@
     </div><!-- Heading Sec -->
     <div class="main-content-area">
         <!--<div class="go-full">-->
-            <div class="account-sec">
-                <div class="logo" style="padding-left: 121px;">
-                    <a href="/" title="">
-                        <i>
-                            <img src="https://ghostszmusic.com/wp-content/uploads/2016/02/cropped-logo-e1484926667618.png" style="width: 35px;">
-                        </i>
-                        <span>GhostszMusic</span>
-                        <p>Games, Music & More</p>
-                    </a>
-                </div>
+        <div class="account-sec">
+            <div class="logo" style="padding-left: 121px;">
+                <a href="/" title="">
+                    <i>
+                        <img src="https://ghostszmusic.com/wp-content/uploads/2016/02/cropped-logo-e1484926667618.png"
+                             style="width: 35px;">
+                    </i>
+                    <span>GhostszMusic</span>
+                    <p>Games, Music & More</p>
+                </a>
+            </div>
 
-                <form class="account-form">
-                    <ul class="account-option">
-                        <li><a title="" class="google" ng-click="gLogin()"><i class="ti-google"></i> Sign in via <strong>google</strong></a></li>
-                        <li><a title="" class="facebook" ng-click="fbLogin()"><i class="ti-facebook"></i> Sign in via <strong>facebook</strong></a></li>
-                    </ul>
-                    <fieldset>
-                        <i class="ti-user"></i>
-                        <input type="text" placeholder="Username" ng-model="user.name"/>
-                    </fieldset>
-                    <fieldset>
-                        <i class="ti-key"></i>
-                        <input type="password" placeholder="Password" ng-model="user.password"/>
-                    </fieldset>
-                    <label><input type="checkbox" ng-model="user.remember"/>Remember me</label>
-                    <input type="submit" ng-click="login(user)" value="submit" class="red" />
-                </form>
-                <ul class="account-feature">
-                    <li><a href="#" title="">Forgot your password?</a></li>
-                    <li><a href="/sign-up" title="">Create a new account</a></li>
-                    <!--<li><button style="color: black;" ng-click="oauth()">Testing OAuth</button></li>-->
-                    <!--<li><button style="color: black;" ng-click="getTokenUser()">Testing OAuth</button></li>-->
+            <form class="account-form">
+                <ul class="account-option">
+                    <li><a title="" class="google" ng-click="gLogin()"><i class="ti-google"></i> Sign in via <strong>google</strong></a>
+                    </li>
+                    <li><a title="" class="facebook" ng-click="fbLogin()"><i class="ti-facebook"></i> Sign in via
+                        <strong>facebook</strong></a></li>
                 </ul>
-            </div><!-- Login Sec -->
+                <fieldset>
+                    <i class="ti-user"></i>
+                    <input type="text" placeholder="Username" ng-model="user.name"/>
+                </fieldset>
+                <fieldset>
+                    <i class="ti-key"></i>
+                    <input type="password" placeholder="Password" ng-model="user.password"/>
+                </fieldset>
+                <label><input type="checkbox" ng-model="user.remember"/>Remember me</label>
+                <input type="submit" ng-click="login(user)" value="submit" class="red"/>
+            </form>
+            <ul class="account-feature">
+                <li><a href="#" title="">Forgot your password?</a></li>
+                <li><a href="/sign-up" title="">Create a new account</a></li>
+                <!--<li><button style="color: black;" ng-click="oauth()">Testing OAuth</button></li>-->
+                <!--<li><button style="color: black;" ng-click="getTokenUser()">Testing OAuth</button></li>-->
+            </ul>
+        </div><!-- Login Sec -->
 
         <!--</div>-->
     </div>
 </div><!-- Panel Content -->
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         'use strict';
 
         //*** Piety Mini Charts ***//
-        $(function() {
+        $(function () {
 
             $('.bar').peity('bar', {
                 fill: ['#07bf29'],

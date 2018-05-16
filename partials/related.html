@@ -7,10 +7,12 @@
             <div class="col-md-4" ng-repeat="r in post">
                 <div class="blog">
                     <div class="blog-thumb">
-                        <a href="{{r.url}}" title=""><img ng-src="{{r.thumb}}" alt="" /></a>
+                        <a href="{{r.url}}" title=""><img ng-src="{{r.thumb}}" alt=""/></a>
                     </div>
                     <div class="blog-info">
-                        <i class="fa fa-calendar" aria-hidden="true"></i> {{r.date}} | <i class="fa fa-comment" aria-hidden="true"></i> {{r.comment_count}}
+                        <i class="fa fa-calendar" aria-hidden="true"></i> {{r.date}} | <i class="fa fa-comment"
+                                                                                          aria-hidden="true"></i>
+                        {{r.comment_count}}
                         <h2><a href="{{r.url}}" title="">{{r.title}}</a></h2>
                         <p ng-bind-html="trustAsHtml(r.short_ver)"></p>
                     </div>

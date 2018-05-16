@@ -54,7 +54,7 @@
         <?php if(is_user_logged_in()){ ?>
         <div class="admin-action-bar">
             <div class="admin-image">
-                <img ng-src="{{user.user_icon_big}}" alt="" />
+                <img style="width: 100px;" ng-src="{{user.user_icon_big}}" alt="" />
             </div>
             <div class="admin-action-info">
                 <span>Welcome</span>

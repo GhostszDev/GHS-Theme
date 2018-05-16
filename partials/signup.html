@@ -39,157 +39,162 @@
     </div><!-- Heading Sec -->
     <div class="main-content-area">
         <!--<div class="go-full">-->
-            <div class="account-sec">
-                <div class="logo" style="padding-left: 121px;">
-                    <a href="/" title="">
-                        <i>
-                            <img src="https://ghostszmusic.com/wp-content/uploads/2016/02/cropped-logo-e1484926667618.png" style="width: 35px;">
-                        </i>
-                        <span>GhostszMusic</span>
-                        <p>Games, Music & More</p>
-                    </a>
-                </div>
-                <form class="account-form">
-                    <ul class="account-option">
-                        <li><a title="" class="google" ng-click="gLogin()"><i class="ti-google"></i> Sign in via <strong>google</strong></a></li>
-                        <li><a title="" class="facebook" ng-click="fbLogin()"><i class="ti-facebook"></i> Sign in via <strong>facebook</strong></a></li>
-                    </ul>
-                    <fieldset>
-                        <i class="ti-user"></i>
-                        <input type="text" placeholder="First Name" ng-model="user.first_name"/>
-                    </fieldset>
-                    <fieldset>
-                        <i class="ti-user"></i>
-                        <input type="text" placeholder="Last Name" ng-model="user.last_name"/>
-                    </fieldset>
-                    <fieldset>
-                        <i class="ti-user"></i>
-                        <input type="text" placeholder="Username" ng-model="user.name"/>
-                    </fieldset>
-                    <fieldset>
-                        <i class="ti-key"></i>
-                        <input type="password" placeholder="Password" ng-model="user.password"/>
-                    </fieldset>
-                    <fieldset>
-                        <i class="ti-email"></i>
-                        <input type="text" placeholder="Email" ng-model="user.email"/>
-                    </fieldset>
-                    <!--<fieldset>-->
-                        <!--<i class="fa fa-birthday-cake"></i>-->
-                        <!--<input placeholder="Enter your birthday" type="text" id="datepicker">-->
-                    <!--</fieldset>-->
-                    <div class="your-age">
-                        <div class="custom-dropdown">
-                            <select id="month" ng-model="user.month">
-                                <option>01</option>
-                                <option>02</option>
-                                <option>03</option>
-                                <option>04</option>
-                                <option>05</option>
-                                <option>06</option>
-                                <option>07</option>
-                                <option>08</option>
-                                <option>09</option>
-                                <option>10</option>
-                                <option>11</option>
-                                <option>12</option>
-                            </select>
-                        </div>
-                        <div class="custom-dropdown">
-                            <select id="date" ng-model="user.date">
-                                <option>01</option>
-                                <option>02</option>
-                                <option>03</option>
-                                <option>05</option>
-                                <option>06</option>
-                                <option>07</option>
-                                <option>08</option>
-                                <option>09</option>
-                                <option>10</option>
-                                <option>11</option>
-                                <option>12</option>
-                                <option>13</option>
-                                <option>14</option>
-                                <option>15</option>
-                                <option>16</option>
-                                <option>17</option>
-                                <option>18</option>
-                                <option>19</option>
-                                <option>20</option>
-                                <option>21</option>
-                                <option>22</option>
-                                <option>23</option>
-                                <option>24</option>
-                                <option>25</option>
-                                <option>26</option>
-                                <option>27</option>
-                                <option>28</option>
-                                <option>29</option>
-                                <option>30</option>
-                                <option>31</option>
-                            </select>
-                        </div>
-                        <div class="custom-dropdown">
-                            <select id="year" ng-model="user.year">
-                                <option>1989</option>
-                                <option>1990</option>
-                                <option>1991</option>
-                                <option>1992</option>
-                                <option>1993</option>
-                                <option>1994</option>
-                                <option>1995</option>
-                                <option>1996</option>
-                                <option>1997</option>
-                                <option>1998</option>
-                                <option>1999</option>
-                                <option>2000</option>
-                                <option>2001</option>
-                                <option>2002</option>
-                                <option>2003</option>
-                                <option>2004</option>
-                                <option>2005</option>
-                                <option>2006</option>
-                                <option>2007</option>
-                                <option>2008</option>
-                                <option>2009</option>
-                            </select>
-                        </div>
-                    </div><!-- your age -->
-                    <p>
-                        <input type="radio" name="5" id="6" class="styled" ng-model="user.gender" value="Male"/> <label for="6">Male</label>
-                        <input type="radio" name="5" id="5" class="styled" ng-model="user.gender"  value="Female"/> <label for="5">Female</label>
-                    </p>
-                    <label>ALREADY ACCOUNT?  <a href="/login" title="">LOGIN HERE</a></label>
-                    <input ng-click="signup(user)" type="submit" value="Sign up" class="red" />
-                </form>
-            </div><!-- Login Sec -->
+        <div class="account-sec">
+            <div class="logo" style="padding-left: 121px;">
+                <a href="/" title="">
+                    <i>
+                        <img src="https://ghostszmusic.com/wp-content/uploads/2016/02/cropped-logo-e1484926667618.png"
+                             style="width: 35px;">
+                    </i>
+                    <span>GhostszMusic</span>
+                    <p>Games, Music & More</p>
+                </a>
+            </div>
+            <form class="account-form">
+                <ul class="account-option">
+                    <li><a title="" class="google" ng-click="gLogin()"><i class="ti-google"></i> Sign in via <strong>google</strong></a>
+                    </li>
+                    <li><a title="" class="facebook" ng-click="fbLogin()"><i class="ti-facebook"></i> Sign in via
+                        <strong>facebook</strong></a></li>
+                </ul>
+                <fieldset>
+                    <i class="ti-user"></i>
+                    <input type="text" placeholder="First Name" ng-model="user.first_name"/>
+                </fieldset>
+                <fieldset>
+                    <i class="ti-user"></i>
+                    <input type="text" placeholder="Last Name" ng-model="user.last_name"/>
+                </fieldset>
+                <fieldset>
+                    <i class="ti-user"></i>
+                    <input type="text" placeholder="Username" ng-model="user.name"/>
+                </fieldset>
+                <fieldset>
+                    <i class="ti-key"></i>
+                    <input type="password" placeholder="Password" ng-model="user.password"/>
+                </fieldset>
+                <fieldset>
+                    <i class="ti-email"></i>
+                    <input type="text" placeholder="Email" ng-model="user.email"/>
+                </fieldset>
+                <!--<fieldset>-->
+                <!--<i class="fa fa-birthday-cake"></i>-->
+                <!--<input placeholder="Enter your birthday" type="text" id="datepicker">-->
+                <!--</fieldset>-->
+                <div class="your-age">
+                    <div class="custom-dropdown">
+                        <select id="month" ng-model="user.month">
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                    </div>
+                    <div class="custom-dropdown">
+                        <select id="date" ng-model="user.date">
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                            <option>24</option>
+                            <option>25</option>
+                            <option>26</option>
+                            <option>27</option>
+                            <option>28</option>
+                            <option>29</option>
+                            <option>30</option>
+                            <option>31</option>
+                        </select>
+                    </div>
+                    <div class="custom-dropdown">
+                        <select id="year" ng-model="user.year">
+                            <option>1989</option>
+                            <option>1990</option>
+                            <option>1991</option>
+                            <option>1992</option>
+                            <option>1993</option>
+                            <option>1994</option>
+                            <option>1995</option>
+                            <option>1996</option>
+                            <option>1997</option>
+                            <option>1998</option>
+                            <option>1999</option>
+                            <option>2000</option>
+                            <option>2001</option>
+                            <option>2002</option>
+                            <option>2003</option>
+                            <option>2004</option>
+                            <option>2005</option>
+                            <option>2006</option>
+                            <option>2007</option>
+                            <option>2008</option>
+                            <option>2009</option>
+                        </select>
+                    </div>
+                </div><!-- your age -->
+                <p>
+                    <input type="radio" name="5" id="6" class="styled" ng-model="user.gender" value="Male"/> <label
+                        for="6">Male</label>
+                    <input type="radio" name="5" id="5" class="styled" ng-model="user.gender" value="Female"/> <label
+                        for="5">Female</label>
+                </p>
+                <label>ALREADY ACCOUNT? <a href="/login" title="">LOGIN HERE</a></label>
+                <input ng-click="signup(user)" type="submit" value="Sign up" class="red"/>
+            </form>
+        </div><!-- Login Sec -->
         <!--</div>-->
     </div>
 </div><!-- Panel Content -->
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         'use strict';
 
         //*** Piety Mini Charts ***//
-        $(function() {
+        $(function () {
 
             $('#datepicker').datetimepicker({
-                i18n:{
-                    en:{
-                        months:[
-                            'January','February','March','April',
-                            'May','June','July','August',
-                            'September','October','November','December',
+                i18n: {
+                    en: {
+                        months: [
+                            'January', 'February', 'March', 'April',
+                            'May', 'June', 'July', 'August',
+                            'September', 'October', 'November', 'December',
                         ],
-                        dayOfWeek:[
+                        dayOfWeek: [
                             "Sun", "Mon", "Tues", "Weds",
                             "Thurs", "Fri", "Sat",
                         ]
                     }
                 },
-                timepicker:false,
-                format:'Y-m-d'
+                timepicker: false,
+                format: 'Y-m-d'
             });
 
             $('.bar').peity('bar', {
