@@ -43,7 +43,7 @@
                 <div class="profile-sec">
                     <div class="profile-head" ng-style="{'background-image':'url('+user.backgroundImg+')'}">
                         <div class="profile-avatar">
-                            <span><img ng-src="{{userProfile.user_icon_100}}" alt=""/></span>
+                            <span><img ng-src="{{userProfile.user_icon_big}}" alt="" style="width: 100px"/></span>
                             <div class="profile-name">
                                 <h3 ng-hide="user.name.length < 1">{{userProfile.userName}}</h3>
                                 <h3 ng-show="user.name.length > 1">{{userProfile.name}}</h3>
@@ -139,7 +139,7 @@
                                 <div class="friend-list">
                                     <ul id="frnd-list">
                                         <li ng-repeat="f in friends">
-                                            <a ng-href="{{domain + f.link}}"><img ng-src="{{f.user_icon}}" alt=""/></a>
+                                            <a ng-href="{{domain + f.link}}"><img ng-src="{{f.user_icon.img}}" alt="" style="width: 46px"/></a>
                                             <h3><a ng-href="{{domain + f.link}}">{{f.userName}}</a><i>{{f.role}}</i>
                                             </h3>
                                             <span class="{{f.status}}">{{f.status}}</span>
