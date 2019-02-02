@@ -1,5 +1,5 @@
-angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
-    .controller('GHS_ctrl', function ($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce, $window) {
+angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
+    .controller('GHS_ctrl', function ($http, $scope, $httpParamSerializerJQLike, $location, $rootScope, $sce, $window, $cookies) {
 
         //params
         $scope.openMenu = false;
@@ -60,6 +60,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             })
                 .then(function (response) {
                     $scope.user.token = response.data.result.access_token;
+                    $window.localStorage.setItem('token', response.data.result.access_token);
 
                 })
                 .catch(function () {
@@ -122,7 +123,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
                             $scope.user.user_icon_100 = window.atob(response.data.user.user_icon_100);
                         }
 
-                        if ($scope.user.token != null || $scope.user.token == '') {
+                        if ($scope.user.token != null || $scope.user.token == '' ) {
                             $scope.oauth();
                         }
                     } else {
@@ -181,7 +182,7 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
         $scope.login = function (user) {
 
             if (angular.isUndefined(user.remember)) {
-                user.remember = false;
+                user.remember = true;
             }
 
 
@@ -199,7 +200,9 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap'])
             })
                 .then(function (response) {
 
-                    $(window).attr('location', $scope.domain);
+                    if(response.data.success == true) {
+                        $(window).attr('location', $scope.domain);
+                    }
 
                 })
                 .catch(function () {

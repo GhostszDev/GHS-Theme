@@ -34,6 +34,7 @@ function ghs_scrs() {
     wp_enqueue_script('angularjs', get_stylesheet_directory_uri() . '/js/angular.min.js');
     wp_enqueue_script('angularjs-resource', get_stylesheet_directory_uri() . '/js/angular-resource.min.js');
     wp_enqueue_script('angularjs-route',  get_stylesheet_directory_uri() . '/js/angular-route.min.js');
+    wp_enqueue_script('cookies',  get_stylesheet_directory_uri() . '/js/cookies.js');
     wp_enqueue_script('BSJS',  get_stylesheet_directory_uri() . '/js/bootstrap.min.js');
     wp_enqueue_script('UIBS',  get_stylesheet_directory_uri() . '/js/ui-bootstrap.min.js');
 //    wp_enqueue_script('main', get_stylesheet_directory_uri() . '/js/main.js');
@@ -41,7 +42,7 @@ function ghs_scrs() {
     wp_enqueue_script('date', get_stylesheet_directory_uri() . '/js/bootstrap-datetimepicker.min.js');
     wp_enqueue_script('app', get_stylesheet_directory_uri() . '/js/app.js');
     wp_enqueue_script('gapi', 'https://apis.google.com/js/platform.js?onload=renderButton');
-    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'app', 'BSJS', 'UIBS', 'moment', 'date', 'gapi'), true);
+    wp_enqueue_script('GhsJS', get_stylesheet_directory_uri() . '/js/GhsJS.js', array( 'angularjs', 'angularjs-route', 'jq', 'app', 'BSJS', 'UIBS', 'moment', 'date', 'gapi', 'cookies'), true);
 
     //localization of scripts
     wp_localize_script('GhsJS', 'myLocalized', array('partials' => trailingslashit( get_template_directory_uri() ) . 'partials/'));
