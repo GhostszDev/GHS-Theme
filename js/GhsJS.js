@@ -6,6 +6,12 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
         $scope.domain = site;
         $scope.loggedIn = false;
         $scope.main_url = '/wp-content/theme/GHS-Theme/partials/main.html';
+        $scope.config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer ' + $cookies.get('token')
+            }
+        };
         $rootScope.post_id = post_id;
         $scope.user_stats = [];
         $scope.user = [];
@@ -50,14 +56,16 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
         //oauth test
         $scope.oauth = function () {
 
-            $http({
-                url: $scope.domain + "wp-json/ghs_api/v1/ghs_oauth",
-                method: "GET",
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                },
-                data: $httpParamSerializerJQLike({})
-            })
+            // $http({
+            //     url: $scope.domain + "wp-json/ghs_api/v1/ghs_oauth",
+            //     method: "GET",
+            //     headers: {
+            //         'content-type': 'application/x-www-form-urlencoded',
+            //         'Authorization': 'Bearer ' + $cookies.get('token')
+            //     },
+            //     data: $httpParamSerializerJQLike({})
+            // })
+            $http.post($scope.domain + "wp-json/ghs_api/v1/ghs_oauth", $httpParamSerializerJQLike({}), $scope.config)
                 .then(function (response) {
                     $scope.user.token = response.data.result.access_token;
                     $window.localStorage.setItem('token', response.data.result.access_token);
@@ -78,7 +86,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/getTokenUserData",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 },
                 data: $httpParamSerializerJQLike({
                     token: $scope.user.token
@@ -102,16 +111,19 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
         //get userData
         $scope.getUser = function () {
 
-            $http({
-                url: $scope.domain + "wp-json/ghs_api/v1/getuserdata",
-                method: "POST",
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                },
-                data: $httpParamSerializerJQLike({
-                    user_ID: user_id
-                })
-            })
+            // $http({
+            //     url: $scope.domain + "wp-json/ghs_api/v1/getuserdata",
+            //     method: "POST",
+            //     headers: {
+            //         'content-type': 'application/x-www-form-urlencoded',
+            //         'Authorization': 'Bearer ' + $cookies.get('token')
+            //     },
+            //     data: $httpParamSerializerJQLike({
+            //     })
+            // })
+            $http.post($scope.domain + "wp-json/ghs_api/v1/getuserdata",
+                $httpParamSerializerJQLike({}),
+                $scope.config)
                 .then(function (response) {
 
                     if (response.data.success) {
@@ -123,9 +135,6 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                             $scope.user.user_icon_100 = window.atob(response.data.user.user_icon_100);
                         }
 
-                        if ($scope.user.token != null || $scope.user.token == '' ) {
-                            $scope.oauth();
-                        }
                     } else {
                         console.log(response.data.error_message);
                     }
@@ -144,7 +153,9 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/ghs_post",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
+
                 },
                 data: $httpParamSerializerJQLike({
                     post_num: post.post_num,
@@ -286,7 +297,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/singlePost",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 },
                 data: $httpParamSerializerJQLike({
                     postID: postID
@@ -316,7 +328,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/getComments",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 },
                 data: $httpParamSerializerJQLike({
                     postID: $rootScope.post_id
@@ -344,7 +357,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/post_comment",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 },
                 data: $httpParamSerializerJQLike({
                     postID: $rootScope.post_id,
@@ -437,7 +451,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/grabGameList",
                 method: "GET",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 }
             })
                 .then(function (response) {
@@ -462,7 +477,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/friendsList",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 },
                 data: $httpParamSerializerJQLike({
                     userID: userID
@@ -493,7 +509,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/userFeed",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 },
                 data: $httpParamSerializerJQLike({
                     userName: $scope.user
@@ -517,6 +534,13 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                     } else {
 
                         $scope.userProfile = response.data.user;
+
+                        if(response.data.user.useBlob){
+                            $scope.userProfile.user_icon = window.atob(response.data.user.user_icon);
+                            $scope.userProfile.user_icon_big = window.atob(response.data.user.user_icon_big);
+                            $scope.userProfile.user_icon_100 = window.atob(response.data.user.user_icon_100);
+                        }
+
                         $scope.friendsList($scope.userProfile.ID);
 
                     }
@@ -535,7 +559,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/userUpdate",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 },
                 data: $httpParamSerializerJQLike({
                     userID: $scope.user.ID,
@@ -592,7 +617,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/updateImg",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 },
                 data: $httpParamSerializerJQLike({
                     img: window.btoa($scope.blobImg),
@@ -649,7 +675,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                                         url: $scope.domain + "wp-json/ghs_api/v1/social",
                                         method: "POST",
                                         headers: {
-                                            'content-type': 'application/x-www-form-urlencoded'
+                                            'content-type': 'application/x-www-form-urlencoded',
+                                            'Authorization': 'Bearer ' + $cookies.get('token')
                                         },
                                         data: $httpParamSerializerJQLike({
                                             user_name: $scope.fbData.user_name,
@@ -731,7 +758,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                         url: $scope.domain + "wp-json/ghs_api/v1/social",
                         method: "POST",
                         headers: {
-                            'content-type': 'application/x-www-form-urlencoded'
+                            'content-type': 'application/x-www-form-urlencoded',
+                            'Authorization': 'Bearer ' + $cookies.get('token')
                         },
                         data: $httpParamSerializerJQLike({
                             user_name: $scope.gData.user_name,
@@ -812,7 +840,8 @@ angular.module('GHS_mod', ['ngRoute', 'ui.bootstrap', 'ngCookies'])
                 url: $scope.domain + "wp-json/ghs_api/v1/updataUser",
                 method: "POST",
                 headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + $cookies.get('token')
                 },
                 data: $httpParamSerializerJQLike({
                     userID: user.ID,

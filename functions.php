@@ -145,6 +145,10 @@ function redirect_to_front_page() {
 
 function go_home(){
 
+    if(isset($_COOKIE['token'])){
+        unset($_COOKIE['token']);
+    }
+
     wp_redirect( home_url() );
     exit();
 

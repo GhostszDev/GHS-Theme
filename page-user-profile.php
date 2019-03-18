@@ -1,5 +1,7 @@
 <?php get_header(); ?>
 
-<?php require_once(dirname( __FILE__ ) . '/partials/userProfile.html'); ?>
+    <div ng-include="'/wp-content/themes/GHS-Theme/partials/userProfile.html'">
+    </div>
+
 
 <?php get_footer(); ?>

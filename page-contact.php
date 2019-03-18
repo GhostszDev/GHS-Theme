@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 
-<?php require_once(dirname( __FILE__ ) . '/partials/contact.html'); ?>
+    <div ng-include="'/wp-content/themes/GHS-Theme/partials/contact.html'">
+    </div>
 
 
 <?php get_footer(); ?>
