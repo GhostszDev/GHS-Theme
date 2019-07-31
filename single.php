@@ -118,14 +118,14 @@
                 </div>
             </div><!-- BLog Single -->
 
-            <div ng-include="'/wp-content/themes/GHS-Theme/partials/related.html'">
+            <div ng-include="'<?php echo get_template_directory_uri() ?>/partials/related.html'">
             </div>
 
             <?php if(is_user_logged_in()){ ?>
-            <div ng-include="'/wp-content/themes/GHS-Theme/partials/comments.html'">
+            <div ng-include="'<?php echo get_template_directory_uri() ?>/partials/comments.html'">
             </div>
             <?php } else { ?>
-            <div ng-include="'/wp-content/themes/GHS-Theme/partials/smallSignUp.html'">
+            <div ng-include="'<?php echo get_template_directory_uri() ?>/partials/smallSignUp.html'">
             </div>
             <?php } ?>
         </div>

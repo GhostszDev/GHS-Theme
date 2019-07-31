@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-    <div ng-include="'/wp-content/themes/GHS-Theme/partials/login.html'">
+    <div ng-include="'<?php echo get_template_directory_uri() ?>/partials/login.html'">
     </div>
 
 
